@@ -20,11 +20,15 @@ function cx_getElement(id) {
    
     let data;
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
-    const res =  fetch(url);
+   const res =  fetch(url);
   //  if (res.ok) {
-       data =  res.json();
-      console.log("pipppo" +res.name);
-    let body = JSON.stringify(res);
+   //    data =  res.json();
+  //    console.log("pipppo" +res.name);
+  //  let body = JSON.stringify(res);
+   .then(response => response.json());
+  .catch(err => console.log(err));
+  
+  
       
    console.log("papppo" + body);
    
