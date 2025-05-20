@@ -25,7 +25,7 @@ function cx_getElement(id) {
      //  data =  res.json();
       console.log("pipppo" +res);
     
-        body: JSON.stringify(data);
+      let  body = JSON.stringify(data);
    console.log("papppo" +body);
    
     document.getElementById("nome").innerHTML = res.name;
