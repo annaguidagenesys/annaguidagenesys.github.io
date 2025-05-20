@@ -6,7 +6,7 @@ var v_customerPhone= "";
 
 function cx_getElement(id) {
 	var evalue = document.getElementById(id).value;
-	console.log(log_prefix + ' ' + evalue);
+	//console.log(log_prefix + ' ' + evalue);
 	return evalue;
 }
 
