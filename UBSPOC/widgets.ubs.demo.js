@@ -23,10 +23,10 @@ function cx_getElement(id) {
     const res =  fetch(url);
     if (res.ok) {
        data =  res.json();
-      console.log(data);
+      console.log("pipppo" +res);
     }
    
-        body: JSON.stringify(data);
+     //   body: JSON.stringify(data);
   
     document.getElementById("nome").innerHTML = "New text!"
 	
