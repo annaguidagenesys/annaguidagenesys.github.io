@@ -16,7 +16,7 @@ function cx_getElement(id) {
     v_Iban= cx_getElement("iban");
     v_customerPhone= cx_getElement("telefono");
    
-   ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+   ys = document.createElement('script'); ys.async = 1; ys.charset = 'utf-8'; document.head.appendChild(ys);
    
     let data;
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
