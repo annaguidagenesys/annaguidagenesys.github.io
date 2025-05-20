@@ -20,9 +20,9 @@ function cx_getElement(id) {
    
     let data;
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
-    const res = await fetch(url);
+    const res =  fetch(url);
     if (res.ok) {
-       data = await res.json();
+       data =  res.json();
       console.log(data);
     }
    const response = {
