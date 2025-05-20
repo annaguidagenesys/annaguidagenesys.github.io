@@ -22,14 +22,14 @@ function cx_getElement(id) {
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
     const res =  fetch(url);
   //  if (res.ok) {
-       data =  res.json();
+     //  data =  res.json();
       console.log("pipppo" +res);
     
      //   body: JSON.stringify(data);
   
-    document.getElementById("nome").innerHTML = data.name;
-	document.getElementById("conto").innerHTML = data.account;
-	document.getElementById("iban").innerHTML = data.iban;
+    document.getElementById("nome").innerHTML = res.name;
+	document.getElementById("conto").innerHTML = res.account;
+	document.getElementById("iban").innerHTML = res.iban;
 };
     
 
