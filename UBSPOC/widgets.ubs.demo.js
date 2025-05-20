@@ -23,7 +23,7 @@ function cx_getElement(id) {
     const res =  fetch(url);
   //  if (res.ok) {
      //  data =  res.json();
-      console.log("pipppo" +res);
+      console.log("pipppo" +res.name);
     let body = JSON.stringify(res);
       
    console.log("papppo" + body);
