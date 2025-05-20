@@ -24,13 +24,13 @@ function cx_getElement(id) {
   //  if (res.ok) {
      //  data =  res.json();
       console.log("pipppo" +res);
-    
+    let body = JSON.stringify(res);
       
-   console.log("papppo" + JSON.stringify(data));
+   console.log("papppo" + body);
    
-    document.getElementById("nome").innerHTML = res.name;
-	document.getElementById("conto").innerHTML = res.account;
-	document.getElementById("iban").innerHTML = res.iban;
+    document.getElementById("nome").innerHTML = body.name;
+	document.getElementById("conto").innerHTML = body.account;
+	document.getElementById("iban").innerHTML = body.iban;
 };
     
 
