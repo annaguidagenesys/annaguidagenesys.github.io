@@ -18,7 +18,7 @@ function cx_getElement(id) {
    
    ys = document.createElement('script'); ys.async = 1; ys.charset = 'utf-8'; document.head.appendChild(ys);
    
-   export const handler = async(event) => {
+    const handler = async(event) => {
 	   let data;
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
     const res = await fetch(url);
