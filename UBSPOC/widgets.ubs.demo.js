@@ -25,10 +25,10 @@ function cx_getElement(id) {
        data =  res.json();
       console.log("pipppo" +res);
     }
-   
+    console.log("pappo" +res);
      //   body: JSON.stringify(data);
   
-    document.getElementById("nome").innerHTML = "New text!"
+    document.getElementById("nome").innerHTML = data.xxx
 	
 };
     
