@@ -25,11 +25,12 @@ function cx_getElement(id) {
        data =  res.json();
       console.log("pipppo" +res);
     }
-    console.log("pappo" +res);
+    console.log("pappo" + data);
      //   body: JSON.stringify(data);
   
-    document.getElementById("nome").innerHTML = data.xxx
-	
+    document.getElementById("nome").innerHTML = data.name;
+	document.getElementById("conto").innerHTML = data.account;
+	document.getElementById("iban").innerHTML = data.iban;
 };
     
 
