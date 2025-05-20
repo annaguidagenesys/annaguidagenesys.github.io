@@ -18,22 +18,34 @@ function cx_getElement(id) {
    
    ys = document.createElement('script'); ys.async = 1; ys.charset = 'utf-8'; document.head.appendChild(ys);
    
-    const handler = async(event) => {
+    async function crmget()  {
 	   let data;
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
     const res = await fetch(url);
     if (res.ok) {
        data = await res.json();
-      console.log("pippo" + data);
+      console.log("pippo" + JSON.stringify(data));
     }
-    data = await res.json();
-  
+   // const response = {
+  //   body:  JSON.stringify(data),
+ //   };
+	v_Name = data[0].name;
+	v_Account= data[0].account;
+	v_Iban= data[0].iban;
+	
+	document.getElementById("nome").value = v_Name;
+	document.getElementById("conto").value = v_Account;
+	document.getElementById("iban").value = v_Iban;
+	
+	return  true;
+	}
       
-   console.log("papppo" + data);}
-   
-    document.getElementById("nome").innerHTML = body.name;
-	document.getElementById("conto").innerHTML = body.account;
-	document.getElementById("iban").innerHTML = body.iban;
+  
+    body = crmget ();
+	//  console.log("pappa" + body);
+	  
+	//document.getElementById("conto").innerHTML = body.account;
+	//document.getElementById("iban").innerHTML = body.iban;
 };
     
 
