@@ -25,8 +25,9 @@ function cx_getElement(id) {
      //  data =  res.json();
       console.log("pipppo" +res);
     
-     //   body: JSON.stringify(data);
-  
+        body: JSON.stringify(data);
+   console.log("papppo" +body);
+   
     document.getElementById("nome").innerHTML = res.name;
 	document.getElementById("conto").innerHTML = res.account;
 	document.getElementById("iban").innerHTML = res.iban;
