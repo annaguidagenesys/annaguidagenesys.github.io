@@ -25,11 +25,11 @@ function cx_getElement(id) {
        data =  res.json();
       console.log(data);
     }
-   const response = {
-        statusCode: 200,
-        body: JSON.stringify(data),
-    };
-    return response;
+   
+        body: JSON.stringify(data);
+  
+    document.getElementById("nome").innerHTML = "New text!"
+	
 };
     
 
