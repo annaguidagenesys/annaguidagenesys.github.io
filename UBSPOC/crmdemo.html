@@ -96,13 +96,13 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
                 *
                 * Reading the PC Environment from the query string or state param returned from OAuth2 response
                 */
-                let pcEnvironment = getEmbeddingPCEnv();
+               // let pcEnvironment = getEmbeddingPCEnv();
 
-                if (!pcEnvironment) {
-                 //   setErrorState('Missing pcEnvironment param in the query string');
-				 console.log('Missing pcEnvironment param in the query string');
-                    return;
-                }
+             //   if (!pcEnvironment) {
+             //       setErrorState('Missing pcEnvironment param in the query string');
+			//	 console.log('Missing pcEnvironment param in the query string');
+            //        return;
+             //   }
 
                 let client = platformClient.ApiClient.instance;
                 let clientApp = null;
