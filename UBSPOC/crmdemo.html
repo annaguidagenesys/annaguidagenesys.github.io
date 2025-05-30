@@ -9,6 +9,8 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
         <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk-<hash>.min.js"></script>
 		
     <title>UBS CRM Demo</title>
     <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
@@ -88,7 +90,7 @@
 
         <script type="text/javascript">
             $(document).ready(() => {
-                let platformClient = window.require('platformClient');
+          //      let platformClient = window.require('platformClient');
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
 				/*
                 * The Client Apps SDK can interpolate the current PC Environment into your app's URL
@@ -96,7 +98,7 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
                 *
                 * Reading the PC Environment from the query string or state param returned from OAuth2 response
                 */
-                let pcEnvironment = 'euc2.pure.cloud';
+            //    let pcEnvironment = 'euc2.pure.cloud';
 
              //   if (!pcEnvironment) {
              //       setErrorState('Missing pcEnvironment param in the query string');
@@ -104,7 +106,21 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
             //        return;
              //   }
 
-                let client = platformClient.ApiClient.instance;
+let myClientApp = new ClientApp({
+    gcHostOriginQueryParam: 'https://apps.euc2.pure.cloud',
+    gcTargetEnvQueryParam: 'euc2.pure.cloud'
+});
+
+return new myClientApp.myConversations.showInteractionDetails(conversationId);
+	  .then((data) => {
+								console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+							  })
+							  .catch((err) => {
+								console.log('There was a failure calling getConversation');
+								console.error(err);
+							  });
+
+       /*         let client = platformClient.ApiClient.instance;
                 let clientApp = null;
                 try {
                     clientApp = new window.purecloud.apps.ClientApp({
@@ -202,7 +218,7 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
                     }
 
                     return result;
-                }
+                }  */
 
                 /**
                  * Determine the embedding Genesys Cloud environment seeded on the query string or
@@ -210,7 +226,7 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
                  *
                  * @returns A string indicating the embedding PC env (e.g. mypurecloud.com, mypurecloud.jp); otherwise, null.
                  */
-                function getEmbeddingPCEnv() {
+               /* function getEmbeddingPCEnv() {
                     let result = null;
 
                     if (window.location.hash && window.location.hash.indexOf('access_token') >= 0) {
@@ -229,7 +245,7 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
 
                     return result;
                 }
-
+*/
                 /**
                  * Sets the base mode of the app to error and show the provided message
                  */
@@ -290,13 +306,13 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
 				// Authenticate with Genesys Cloud
 				function authenticate(client, pcEnvironment) {
 					// Allow targeting a different environment when host app is running locally
-					const platformEnvironment = pcEnvironment === 'localhost' ? 'euc2.pure.cloud' : pcEnvironment;
+					//const platformEnvironment = pcEnvironment === 'localhost' ? 'euc2.pure.cloud' : pcEnvironment;
 					/*
 					* Note: To use this app in your own org, you will need to create your own OAuth2 Client(s)
 					* in your Genesys Cloud org.  After creating the Implicit grant client, map the client id(s) to
 					* the specified region key(s) in the object below, deploy the page, and configure an app to point to that URL.
 					*/
-					const pcOAuthClientIds = {'euc2.pure.cloud': '27b4cba3-cf71-40c2-8229-21624fed26dc'};
+					//const pcOAuthClientIds = {'euc2.pure.cloud': '27b4cba3-cf71-40c2-8229-21624fed26dc'};
 
 					const clientId = pcOAuthClientIds[platformEnvironment];
 					if (!clientId) {
@@ -323,7 +339,7 @@ let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | convers
 							window.history.replaceState(null, '', `${pathname}?${data.state}`);
 						});
 				}
-retrieveANI();
+//retrieveANI();
 document.getElementById("telefono").value = conversationId;
 } );
 	
