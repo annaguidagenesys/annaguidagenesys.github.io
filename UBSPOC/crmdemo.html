@@ -106,8 +106,8 @@ const conversationsApi = new platformClient.ConversationsApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 
-const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ?
-                config.testUri : config.prodUri;
+const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ;
+//?                config.testUri : config.prodUri;
 
 client.setEnvironment('euc2.pure.cloud');
 client.loginImplicitGrant(
