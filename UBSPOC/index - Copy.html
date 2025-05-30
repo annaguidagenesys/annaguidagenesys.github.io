@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="plain/text; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="application/json"/>
+  <meta http-equiv="Content-Type" content="application/x-www-form-urlencoded"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
+        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+		
+    <title>UBS CRM Demo</title>
+    <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
+
+
+<style>
+	.cx-common-container .cx-titlebar .cx-icon {
+    float: left;
+    width: 96px;
+    height: 96px;
+    margin-top: 200px
+   }
+   .gen-callback-customer-logo {
+    display: block;
+    width: 337px;
+    height: 96px;
+    background: url(UBS_Logo_Semibold.svg) no-repeat center;
+   }
+   label {
+    width: 80px;
+    display: inline-block;
+   }
+   legend {
+    color: red;
+    font-weight: bold
+   }
+   .button-91 {
+  color: #fff;
+  padding: 15px 25px;
+  background-color: #38D2D2;
+  background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 16px;
+
+  border: 0;
+
+  cursor: pointer;
+}
+</style/>
+
+  </head>
+  <body>
+	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
+
+	<fieldset>
+	<br></br>
+	<legend>Customer Information</legend>
+      <label for="nome">Name: </label>
+      <input id="nome" type="text" name="nome" value="" size="30" maxlength="30" />
+	<br></br>
+	  <label for="conto">Account: </label>
+      <input id="conto" type="text" name="conto" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="iban">IBAN: </label>
+      <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="telefono">Phone: </label>
+      <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
+	<br></br>
+    </fieldset>
+	
+	<br></br>
+
+	<button class="button-91" id="messenger_btn" onclick="searchCustData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Retrieve Customer Data 
+      </button>
+	 
+ <script type="text/javascript">
+ 
+
+
+ var conversationId = null;
+            (function () {
+                
+                
+                
+
+                function getParamValue(paramPairs){
+                    if(decodeURIComponent){
+                        return decodeURIComponent(paramPairs[1]);
+                    }
+
+                    return paramPairs[1];
+                }
+
+                $('.ex-url').text(window.location);
+                var queryString = window.location.search.substring(1);
+                var pairs = queryString.split('&');
+                var pcEnv = null;
+                var gcHostOrigin = null;
+                var gcTargetEnv = null;
+                for (let i = 0; i < pairs.length; i++)
+                {
+                    let currParam = pairs[i].split('=');
+                    let currLiDt = '';
+                    let currLiDd = document.createElement('dd');
+
+                     if(['conversationId', 'pcConversationId'].indexOf(currParam[0]) !== -1) {
+                        conversationId = getParamValue(currParam);
+                        currLiDt = '<dt>{{pcConversationId}}</dt>';
+                        currLiDd.textContent = conversationId;
+                    } 
+
+                    if (currLiDt) {
+                        $('dl.url-vars').append(currLiDt);
+                        $('dl.url-vars').append(currLiDd);
+                    }
+                }
+
+            
+               
+            })();
+
+	// Authenticate with Genesys Cloud
+				function authenticate(client, pcEnvironment) {
+					// Allow targeting a different environment when host app is running locally
+					const platformEnvironment = pcEnvironment === 'localhost' ? 'euc2.pure.cloud' : pcEnvironment;
+					/*
+					* Note: To use this app in your own org, you will need to create your own OAuth2 Client(s)
+					* in your Genesys Cloud org.  After creating the Implicit grant client, map the client id(s) to
+					* the specified region key(s) in the object below, deploy the page, and configure an app to point to that URL.
+					*/
+					const pcOAuthClientIds = {'euc2.pure.cloud': '27b4cba3-cf71-40c2-8229-21624fed26dc'};
+
+					const clientId = pcOAuthClientIds[platformEnvironment];
+					if (!clientId) {
+						const defaultErr = platformEnvironment + ': Unknown/Unsupported Genesys Cloud Environment';
+						const localErr = `
+							The host app is running locally and the target platform client environment was mapped to '${platformEnvironment}'.
+							Ensure that you have an oauth client specified for this environment.
+						`;
+						return Promise.reject(new Error(pcEnvironment === 'localhost' ? localErr : defaultErr));
+					}
+
+					client.setEnvironment(platformEnvironment);
+					client.setPersistSettings(true);
+
+					const { origin, protocol, host, pathname } = window.location;
+					const redirectUrl = (origin || `${protocol}//${host}`) + pathname;
+					let stateJSON = {
+						"pcEnvironment": pcEnvironment
+					};
+					stateValue = JSON.stringify(stateJSON);
+
+					return client.loginImplicitGrant(clientId, redirectUrl, {state: `pcEnvironment=${pcEnvironment}`})
+						.then(data => {
+							window.history.replaceState(null, '', `${pathname}?${data.state}`);
+						});
+				}
+
+    $(document).ready(() => {
+                let platformClient = window.require('platformClient');
+	           let pcEnvironment = getEmbeddingPCEnv();
+
+                if (!pcEnvironment) {
+                    setErrorState('Missing pcEnvironment param in the query string');
+                    return;
+                }
+
+                let client = platformClient.ApiClient.instance;
+                let clientApp = null;
+                try {
+                    clientApp = new window.purecloud.apps.ClientApp({
+                        pcEnvironment: pcEnvironment
+                    });
+                } catch (e) {
+                    setErrorState(pcEnvironment + ': Unknown/Unsupported Genesys Cloud Embed Context');
+                    return;
+                }
+
+
+
+                // Authenticate with Genesys Cloud
+                let authenticatingEl = document.querySelector('.authenticating');
+                setHidden(authenticatingEl, false);
+
+                let authenticated = false;
+                let userDataAcquired = false;
+                let canViewInteraction = false;
+                
+
+                authenticate(client, pcEnvironment)
+                    .then(() => {
+                        authenticated = true;
+                        return new platformClient.UsersApi().getUsersMe({ 'expand': ['authorization'] })
+                    })
+                    .then(profileData => {
+                        userDataAcquired = true;	
+				setHidden(authenticatingEl, true);
+				
+
+function retrieveANI (){
+
+
+let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
+
+return new platformClient.ConversationsApi().getConversation(conversationId)
+  .then((data) => {
+    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+  })
+  .catch((err) => {
+    console.log('There was a failure calling getConversation');
+    console.error(err);
+  });
+}
+}							
+ function setHidden(el, hidden) {
+                    if (hidden) {
+                        el.classList.add('hidden');
+                    } else {
+                        el.classList.remove('hidden');
+                    }
+                }
+retrieveANI();
+}				
+				
+				
+				
+				
+    document.getElementById("telefono").value = conversationId;
+	
+	let searchCustData = function () {
+    let elem = document.createElement("script");
+    elem.setAttribute("type","text/javascript");
+    elem.src = "./widgets.ubs.demo.js"
+    document.head.appendChild(elem);
+  }
+
+  </script>
+    </body>
+</html>

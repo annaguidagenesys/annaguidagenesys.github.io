@@ -42,10 +42,7 @@ function cx_getElement(id) {
       
   
     body = crmget ();
-	//  console.log("pappa" + body);
-	  
-	//document.getElementById("conto").innerHTML = body.account;
-	//document.getElementById("iban").innerHTML = body.iban;
+	
 };
     
 

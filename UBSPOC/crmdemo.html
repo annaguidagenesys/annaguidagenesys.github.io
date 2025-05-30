@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="plain/text; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="application/json"/>
+  <meta http-equiv="Content-Type" content="application/x-www-form-urlencoded"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
+        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+		
+    <title>UBS CRM Demo</title>
+    <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
+
+
+<style>
+	.cx-common-container .cx-titlebar .cx-icon {
+    float: left;
+    width: 96px;
+    height: 96px;
+    margin-top: 200px
+   }
+   .gen-callback-customer-logo {
+    display: block;
+    width: 337px;
+    height: 96px;
+    background: url(UBS_Logo_Semibold.svg) no-repeat center;
+   }
+   label {
+    width: 80px;
+    display: inline-block;
+   }
+   legend {
+    color: red;
+    font-weight: bold
+   }
+   .button-91 {
+  color: #fff;
+  padding: 15px 25px;
+  background-color: #38D2D2;
+  background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 16px;
+
+  border: 0;
+
+  cursor: pointer;
+}
+</style/>
+
+  </head>
+
+    <body>
+        <noscript>
+            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
+        </noscript>
+
+  
+	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
+
+	<fieldset>
+	<br></br>
+	<legend>Customer Information</legend>
+      <label for="nome">Name: </label>
+      <input id="nome" type="text" name="nome" value="" size="30" maxlength="30" />
+	<br></br>
+	  <label for="conto">Account: </label>
+      <input id="conto" type="text" name="conto" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="iban">IBAN: </label>
+      <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="telefono">Phone: </label>
+      <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
+	<br></br>
+    </fieldset>
+	
+	<br></br>
+
+	<button class="button-91" id="messenger_btn" onclick="searchCustData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Retrieve Customer Data 
+      </button>   
+
+
+        <script type="text/javascript">
+            $(document).ready(() => {
+                let platformClient = window.require('platformClient');
+
+				/*
+                * The Client Apps SDK can interpolate the current PC Environment into your app's URL
+                * EX: https://mypurecloud.github.io/client-app-sdk/directoryNavigationDemo.html?pcEnvironment={{pcEnvironment}}
+                *
+                * Reading the PC Environment from the query string or state param returned from OAuth2 response
+                */
+                let pcEnvironment = getEmbeddingPCEnv();
+
+                if (!pcEnvironment) {
+                 //   setErrorState('Missing pcEnvironment param in the query string');
+				 console.log('Missing pcEnvironment param in the query string');
+                    return;
+                }
+
+                let client = platformClient.ApiClient.instance;
+                let clientApp = null;
+                try {
+                    clientApp = new window.purecloud.apps.ClientApp({
+                        pcEnvironment: pcEnvironment
+                    });
+                } catch (e) {
+                    console.log(pcEnvironment + ': Unknown/Unsupported Genesys Cloud Embed Context');
+                    return;
+                }
+
+
+
+                // Authenticate with Genesys Cloud
+                let authenticatingEl = document.querySelector('.authenticating');
+                setHidden(authenticatingEl, false);
+
+                let authenticated = false;
+                let userDataAcquired = false;
+                
+                
+
+                authenticate(client, pcEnvironment)
+                    .then(() => {
+                        authenticated = true;
+                        return new platformClient.UsersApi().getUsersMe({ 'expand': ['authorization'] })
+                    })
+                    .then(profileData => {
+                        userDataAcquired = true;
+                        
+                        
+                        setHidden(authenticatingEl, true);
+
+                        function retrieveÁNI(){
+                            let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
+
+							return new platformClient.ConversationsApi().getConversation(conversationId)
+							  .then((data) => {
+								console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+							  })
+							  .catch((err) => {
+								console.log('There was a failure calling getConversation');
+								console.error(err);
+							  });
+                                                          
+                        }
+
+                      //  confButtonEl.addEventListener('click', initiateConference);
+
+                        setHidden(ExampleEl, false);
+                    })
+                    .catch(function (err) {
+                        setHidden(authenticatingEl, true);
+
+                        if (!authenticated) {
+                            console.log('Failed to Authenticate with Genesys Cloud - ' + err.message);
+                        } else if (!userDataAcquired)   {
+                            console.log('Failed to locate user in Genesys Cloud');
+                        }
+                    });
+
+
+
+                function setHidden(el, hidden) {
+                    if (hidden) {
+                        el.classList.add('hidden');
+                    } else {
+                        el.classList.remove('hidden');
+                    }
+                }
+
+                function extractParams(paramStr) {
+                    let result = {};
+
+                    if (paramStr) {
+                        let params = paramStr.split('&');
+                        params.forEach(function(currParam) {
+                            if (currParam) {
+                                let paramTokens = currParam.split('=');
+                                let paramName = paramTokens[0];
+                                let paramValue = paramTokens[1];
+                                if (paramName) {
+                                    paramName = decodeURIComponent(paramName);
+                                    paramValue = paramValue ? decodeURIComponent(paramValue) : null;
+
+                                    if (!result.hasOwnProperty(paramName)) {
+                                        result[paramName] = paramValue;
+                                    } else if (Array.isArray(result[paramName])) {
+                                        result[paramName].push(paramValue);
+                                    } else {
+                                        result[paramName] = [result[paramName], paramValue];
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    return result;
+                }
+
+                /**
+                 * Determine the embedding Genesys Cloud environment seeded on the query string or
+                 * being returned through the OAuth2 Implicit grant state hash param.
+                 *
+                 * @returns A string indicating the embedding PC env (e.g. mypurecloud.com, mypurecloud.jp); otherwise, null.
+                 */
+                function getEmbeddingPCEnv() {
+                    let result = null;
+
+                    if (window.location.hash && window.location.hash.indexOf('access_token') >= 0) {
+                        let oauthParams = extractParams(window.location.hash.substring(1));
+                        if (oauthParams && oauthParams.access_token && oauthParams.state) {
+                            // OAuth2 spec dictates this encoding
+                            // See: https://tools.ietf.org/html/rfc6749#appendix-B
+                            let stateSearch = unescape(oauthParams.state);
+                            result = extractParams(stateSearch).pcEnvironment;
+                        }
+                    }
+
+                    if (!result && window.location.search) {
+                        result = extractParams(window.location.search.substring(1)).pcEnvironment || null;
+                    }
+
+                    return result;
+                }
+
+                /**
+                 * Sets the base mode of the app to error and show the provided message
+                 */
+                function setErrorState(errorMsg) {
+                    let failureEl = document.querySelector('.failure');
+                    failureEl.textContent = errorMsg || '';
+                    setHidden(failureEl, !errorMsg);
+                }
+
+                function isPermission(item, targetItem) {
+                    let isItem = item === '*' || targetItem === '*';
+                    if (!isItem) {
+                        isItem = item === targetItem;
+                    }
+                    return isItem;
+                }
+
+                /**
+                 * Parse the permissions array and check whether or not the match the specified required ones.
+                 *
+                 * @returns A boolean indicating if the user possesses the required permissions.
+                 */
+                function checkPermission(permissions, permissionValue) {
+                    let isAllowed = false;
+
+                    if (!permissions) {
+                        permissions = [];
+                    }
+
+                    if (permissionValue.match(/^[a-zA-Z0-9]+:\*$/)) {
+                        permissionValue = permissionValue.replace('*', '*:*');
+                    }
+
+                    const permissionsToValidate = permissionValue.split(':'),
+                        targetDomain = permissionsToValidate[0],
+                        targetEntity = permissionsToValidate[1],
+                        targetAction = permissionsToValidate[2];
+
+                    permissions.forEach(function (permission) {
+                        const permissions = permission.split(':'),
+                            domain = permissions[0],
+                            entity = permissions[1],
+                            actionSet = permissions[2];
+
+                        if (targetDomain === domain) {
+                            const matchesEntity = isPermission(targetEntity, entity),
+                                matchesAction = isPermission(targetAction, actionSet);
+
+                            if (matchesEntity && matchesAction) {
+                                isAllowed = true;
+                            }
+                        }
+                    });
+
+                    return isAllowed;
+                }
+
+				// Authenticate with Genesys Cloud
+				function authenticate(client, pcEnvironment) {
+					// Allow targeting a different environment when host app is running locally
+					const platformEnvironment = pcEnvironment === 'localhost' ? 'euc2.pure.cloud' : pcEnvironment;
+					/*
+					* Note: To use this app in your own org, you will need to create your own OAuth2 Client(s)
+					* in your Genesys Cloud org.  After creating the Implicit grant client, map the client id(s) to
+					* the specified region key(s) in the object below, deploy the page, and configure an app to point to that URL.
+					*/
+					const pcOAuthClientIds = {'euc2.pure.cloud': '27b4cba3-cf71-40c2-8229-21624fed26dc'};
+
+					const clientId = pcOAuthClientIds[platformEnvironment];
+					if (!clientId) {
+						const defaultErr = platformEnvironment + ': Unknown/Unsupported Genesys Cloud Environment';
+						const localErr = `
+							The host app is running locally and the target platform client environment was mapped to '${platformEnvironment}'.
+							Ensure that you have an oauth client specified for this environment.
+						`;
+						return Promise.reject(new Error(pcEnvironment === 'localhost' ? localErr : defaultErr));
+					}
+
+					client.setEnvironment(platformEnvironment);
+					client.setPersistSettings(true);
+
+					const { origin, protocol, host, pathname } = window.location;
+					const redirectUrl = (origin || `${protocol}//${host}`) + pathname;
+					let stateJSON = {
+						"pcEnvironment": pcEnvironment
+					};
+					stateValue = JSON.stringify(stateJSON);
+
+					return client.loginImplicitGrant(clientId, redirectUrl, {state: `pcEnvironment=${pcEnvironment}`})
+						.then(data => {
+							window.history.replaceState(null, '', `${pathname}?${data.state}`);
+						});
+				}
+retrieveANI();
+document.getElementById("telefono").value = conversationId;
+} );
+	
+	
+	let searchCustData = function () {
+    let elem = document.createElement("script");
+    elem.setAttribute("type","text/javascript");
+    elem.src = "./widgets.ubs.demo.js"
+    document.head.appendChild(elem);
+ }		
+			
+        </script>
+    </body>
+</html>
