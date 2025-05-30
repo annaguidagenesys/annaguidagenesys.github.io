@@ -91,254 +91,61 @@
         <script type="text/javascript">
             $(document).ready(() => {
           //      let platformClient = window.require('platformClient');
+
+				
+export default {
+    clientID: '27b4cba3-cf71-40c2-8229-21624fed26dc',
+
+    genesysCloud: {
+        // Genesys Cloud region
+        // eg. 'mypurecloud.ie', 'euw2.pure.cloud', etc...
+        region: 'euc2.pure.cloud'
+    }
+}
+
+const platformClient = require('platformClient');
+const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-				/*
-                * The Client Apps SDK can interpolate the current PC Environment into your app's URL
-                * EX: https://mypurecloud.github.io/client-app-sdk/directoryNavigationDemo.html?pcEnvironment={{pcEnvironment}}
-                *
-                * Reading the PC Environment from the query string or state param returned from OAuth2 response
-                */
-            //    let pcEnvironment = 'euc2.pure.cloud';
 
-             //   if (!pcEnvironment) {
-             //       setErrorState('Missing pcEnvironment param in the query string');
-			//	 console.log('Missing pcEnvironment param in the query string');
-            //        return;
-             //   }
+// API instances
+const usersApi = new platformClient.UsersApi();
+const conversationsApi = new platformClient.ConversationsApi();
 
-let myClientApp = new ClientApp({
-    gcHostOriginQueryParam: 'https://apps.euc2.pure.cloud',
-    gcTargetEnvQueryParam: 'euc2.pure.cloud'
-});
+const urlParams = new URLSearchParams(window.location.search);
+currentConversationId = urlParams.get('conversationid');
 
-return new myClientApp.myConversations.showInteractionDetails(conversationId);
-	  .then((data) => {
-								console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-							  })
-							  .catch((err) => {
-								console.log('There was a failure calling getConversation');
-								console.error(err);
-							  });
+const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ?
+                config.testUri : config.prodUri;
 
-       /*         let client = platformClient.ApiClient.instance;
-                let clientApp = null;
-                try {
-                    clientApp = new window.purecloud.apps.ClientApp({
-                        pcEnvironment: pcEnvironment
-                    });
-                } catch (e) {
-                    console.log(pcEnvironment + ': Unknown/Unsupported Genesys Cloud Embed Context');
-                    return;
-                }
+client.setEnvironment(config.genesysCloud.region);
+client.loginImplicitGrant(
+    config.clientID,
+    redirectUri,
+    { state: currentConversationId })
+.then(data => {
+    console.log(data);
 
+    // Assign conversation id
+    currentConversationId = data.state;
+    
+    // Get Details of current User
+    return usersApi.getUsersMe();
+}).then(userMe => {
+    userId = userMe.id;
 
+    // Get current conversation
+  //  return conversationsApi.getConversation(currentConversationId);
+   return conversationsApi.getConversation(conversationId);
+  
+}).then((conv) => { 
+    currentConversation = conv;
 
-                // Authenticate with Genesys Cloud
-                let authenticatingEl = document.querySelector('.authenticating');
-                setHidden(authenticatingEl, false);
+    return setupChatChannel();
+}).then(data => {
+    console.log('Finished Setup');
 
-                let authenticated = false;
-                let userDataAcquired = false;
-                
-                
-
-                authenticate(client, pcEnvironment)
-                    .then(() => {
-                        authenticated = true;
-                        return new platformClient.UsersApi().getUsersMe({ 'expand': ['authorization'] })
-                    })
-                    .then(profileData => {
-                        userDataAcquired = true;
-                        
-                        
-                        setHidden(authenticatingEl, true);
-
-                        function retrieveÁNI(){
-                            
-
-							return new platformClient.ConversationsApi().getConversation(conversationId)
-							  .then((data) => {
-								console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-							  })
-							  .catch((err) => {
-								console.log('There was a failure calling getConversation');
-								console.error(err);
-							  });
-                                                          
-                        }
-
-                      //  confButtonEl.addEventListener('click', initiateConference);
-
-                        setHidden(ExampleEl, false);
-                    })
-                    .catch(function (err) {
-                        setHidden(authenticatingEl, true);
-
-                        if (!authenticated) {
-                            console.log('Failed to Authenticate with Genesys Cloud - ' + err.message);
-                        } else if (!userDataAcquired)   {
-                            console.log('Failed to locate user in Genesys Cloud');
-                        }
-                    });
-
-
-
-                function setHidden(el, hidden) {
-                    if (hidden) {
-                        el.classList.add('hidden');
-                    } else {
-                        el.classList.remove('hidden');
-                    }
-                }
-
-                function extractParams(paramStr) {
-                    let result = {};
-
-                    if (paramStr) {
-                        let params = paramStr.split('&');
-                        params.forEach(function(currParam) {
-                            if (currParam) {
-                                let paramTokens = currParam.split('=');
-                                let paramName = paramTokens[0];
-                                let paramValue = paramTokens[1];
-                                if (paramName) {
-                                    paramName = decodeURIComponent(paramName);
-                                    paramValue = paramValue ? decodeURIComponent(paramValue) : null;
-
-                                    if (!result.hasOwnProperty(paramName)) {
-                                        result[paramName] = paramValue;
-                                    } else if (Array.isArray(result[paramName])) {
-                                        result[paramName].push(paramValue);
-                                    } else {
-                                        result[paramName] = [result[paramName], paramValue];
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                    return result;
-                }  */
-
-                /**
-                 * Determine the embedding Genesys Cloud environment seeded on the query string or
-                 * being returned through the OAuth2 Implicit grant state hash param.
-                 *
-                 * @returns A string indicating the embedding PC env (e.g. mypurecloud.com, mypurecloud.jp); otherwise, null.
-                 */
-               /* function getEmbeddingPCEnv() {
-                    let result = null;
-
-                    if (window.location.hash && window.location.hash.indexOf('access_token') >= 0) {
-                        let oauthParams = extractParams(window.location.hash.substring(1));
-                        if (oauthParams && oauthParams.access_token && oauthParams.state) {
-                            // OAuth2 spec dictates this encoding
-                            // See: https://tools.ietf.org/html/rfc6749#appendix-B
-                            let stateSearch = unescape(oauthParams.state);
-                            result = extractParams(stateSearch).pcEnvironment;
-                        }
-                    }
-
-                    if (!result && window.location.search) {
-                        result = extractParams(window.location.search.substring(1)).pcEnvironment || null;
-                    }
-
-                    return result;
-                }
-*/
-                /**
-                 * Sets the base mode of the app to error and show the provided message
-                 */
-                function setErrorState(errorMsg) {
-                    let failureEl = document.querySelector('.failure');
-                    failureEl.textContent = errorMsg || '';
-                    setHidden(failureEl, !errorMsg);
-                }
-
-                function isPermission(item, targetItem) {
-                    let isItem = item === '*' || targetItem === '*';
-                    if (!isItem) {
-                        isItem = item === targetItem;
-                    }
-                    return isItem;
-                }
-
-                /**
-                 * Parse the permissions array and check whether or not the match the specified required ones.
-                 *
-                 * @returns A boolean indicating if the user possesses the required permissions.
-                 */
-                function checkPermission(permissions, permissionValue) {
-                    let isAllowed = false;
-
-                    if (!permissions) {
-                        permissions = [];
-                    }
-
-                    if (permissionValue.match(/^[a-zA-Z0-9]+:\*$/)) {
-                        permissionValue = permissionValue.replace('*', '*:*');
-                    }
-
-                    const permissionsToValidate = permissionValue.split(':'),
-                        targetDomain = permissionsToValidate[0],
-                        targetEntity = permissionsToValidate[1],
-                        targetAction = permissionsToValidate[2];
-
-                    permissions.forEach(function (permission) {
-                        const permissions = permission.split(':'),
-                            domain = permissions[0],
-                            entity = permissions[1],
-                            actionSet = permissions[2];
-
-                        if (targetDomain === domain) {
-                            const matchesEntity = isPermission(targetEntity, entity),
-                                matchesAction = isPermission(targetAction, actionSet);
-
-                            if (matchesEntity && matchesAction) {
-                                isAllowed = true;
-                            }
-                        }
-                    });
-
-                    return isAllowed;
-                }
-
-				// Authenticate with Genesys Cloud
-				function authenticate(client, pcEnvironment) {
-					// Allow targeting a different environment when host app is running locally
-					//const platformEnvironment = pcEnvironment === 'localhost' ? 'euc2.pure.cloud' : pcEnvironment;
-					/*
-					* Note: To use this app in your own org, you will need to create your own OAuth2 Client(s)
-					* in your Genesys Cloud org.  After creating the Implicit grant client, map the client id(s) to
-					* the specified region key(s) in the object below, deploy the page, and configure an app to point to that URL.
-					*/
-					//const pcOAuthClientIds = {'euc2.pure.cloud': '27b4cba3-cf71-40c2-8229-21624fed26dc'};
-
-					const clientId = pcOAuthClientIds[platformEnvironment];
-					if (!clientId) {
-						const defaultErr = platformEnvironment + ': Unknown/Unsupported Genesys Cloud Environment';
-						const localErr = `
-							The host app is running locally and the target platform client environment was mapped to '${platformEnvironment}'.
-							Ensure that you have an oauth client specified for this environment.
-						`;
-						return Promise.reject(new Error(pcEnvironment === 'localhost' ? localErr : defaultErr));
-					}
-
-					client.setEnvironment(platformEnvironment);
-					client.setPersistSettings(true);
-
-					const { origin, protocol, host, pathname } = window.location;
-					const redirectUrl = (origin || `${protocol}//${host}`) + pathname;
-					let stateJSON = {
-						"pcEnvironment": pcEnvironment
-					};
-					stateValue = JSON.stringify(stateJSON);
-
-					return client.loginImplicitGrant(clientId, redirectUrl, {state: `pcEnvironment=${pcEnvironment}`})
-						.then(data => {
-							window.history.replaceState(null, '', `${pathname}?${data.state}`);
-						});
-				}
+// Error Handling
+}).catch(e => console.log(e));				
 //retrieveANI();
 document.getElementById("telefono").value = conversationId;
 } );
