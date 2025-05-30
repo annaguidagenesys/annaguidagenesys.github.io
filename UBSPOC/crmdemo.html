@@ -89,7 +89,7 @@
         <script type="text/javascript">
             $(document).ready(() => {
                 let platformClient = window.require('platformClient');
-
+let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
 				/*
                 * The Client Apps SDK can interpolate the current PC Environment into your app's URL
                 * EX: https://mypurecloud.github.io/client-app-sdk/directoryNavigationDemo.html?pcEnvironment={{pcEnvironment}}
@@ -138,7 +138,7 @@
                         setHidden(authenticatingEl, true);
 
                         function retrieveÁNI(){
-                            let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
+                            
 
 							return new platformClient.ConversationsApi().getConversation(conversationId)
 							  .then((data) => {
