@@ -98,7 +98,7 @@
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-
+const ani;
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -139,7 +139,7 @@ client.loginImplicitGrant(
 
 
     if (caller && caller.attributes) {
-        const ani = caller.attributes['Call.Ani'];
+         ani = caller.attributes['Call.Ani'];
         console.log('Caller ANI:', ani);
     }
 })
@@ -154,15 +154,15 @@ client.loginImplicitGrant(
    
 
   
-}).then((conv) => { 
-    currentConversation = conv;
+//}).then((conv) => { 
+  //  currentConversation = conv;
 
    // return setupChatChannel();
-}).then(data => {
-    console.log('Finished Setup');
+//}).then(data => {
+ //   console.log('Finished Setup');
 
 // Error Handling
-}).catch(e => console.log(e));				
+//}).catch(e => console.log(e));				
 //retrieveANI();
 
 
