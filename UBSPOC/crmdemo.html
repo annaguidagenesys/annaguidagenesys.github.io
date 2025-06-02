@@ -131,7 +131,7 @@ client.loginImplicitGrant(
  //  return conversationsApi.getConversation(conversationId);
    
    
-   conversationsApi.getConversation(conversationId)
+   conversationsApi.getConversation(currentConversationId)
   .then((data) => {
     console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 	const caller = data.participants.find(p =>
