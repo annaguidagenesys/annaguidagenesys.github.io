@@ -166,6 +166,7 @@ const conversation = await conversationsApi.getConversation(conversationId);
 
     if (customerParticipant && customerParticipant.attributes) {
         return customerParticipant.attributes.ani;
+	const ani = customerParticipant.attributes.ani; 
     } else {
         return null;
     }
@@ -177,7 +178,7 @@ const conversation = await conversationsApi.getConversation(conversationId);
 }
 
 //document.getElementById("telefono").value = conversationId;
-document.getElementById("telefono").value = customerParticipant.attributes.ani;
+document.getElementById("telefono").value = ani;
 } );
 	
 	
