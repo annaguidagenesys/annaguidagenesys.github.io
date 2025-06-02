@@ -98,7 +98,7 @@
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-const ani;
+const ani = '';
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -168,7 +168,7 @@ client.loginImplicitGrant(
 
 //document.getElementById("telefono").value = conversationId;
 document.getElementById("telefono").value = ani;
-} );
+});
 	
 	
 	let searchCustData = function () {
