@@ -106,7 +106,8 @@ const conversationsApi = new platformClient.ConversationsApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 
-const redirectUri = (new URL (window.location.href)).hostname == 'http://https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' 
+const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' ;
+//const redirectUri = (new URL (window.location.href)).hostname == 'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' 
 //?                config.testUri : config.prodUri;
 
 client.setEnvironment('euc2.pure.cloud');
