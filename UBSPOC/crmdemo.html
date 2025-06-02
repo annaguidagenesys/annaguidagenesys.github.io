@@ -128,9 +128,20 @@ client.loginImplicitGrant(
 
     // Get current conversation
   //  return conversationsApi.getConversation(currentConversationId);
-   return conversationsApi.getConversation(conversationId);
-   .then(data => {
-    console.log(data);}
+ //  return conversationsApi.getConversation(conversationId);
+   
+   
+   apiInstance.getConversation(conversationId)
+  .then((data) => {
+    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+  })
+  .catch((err) => {
+    console.log('There was a failure calling getConversation');
+    console.error(err);
+  });
+   
+   
+
   
 }).then((conv) => { 
     currentConversation = conv;
