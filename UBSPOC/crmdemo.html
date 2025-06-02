@@ -134,6 +134,17 @@ client.loginImplicitGrant(
    conversationsApi.getConversation(conversationId)
   .then((data) => {
     console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+	const caller = data.participants.find(p =>
+	p.purpose === 'customer' || p.purpose === 'caller');
+
+
+    if (caller && caller.attributes) {
+        const ani = caller.attributes['Call.Ani'];
+        console.log('Caller ANI:', ani);
+    }
+})
+.catch((err) =>; console.error(err));
+						  
   })
   .catch((err) => {
     console.log('There was a failure calling getConversation');
