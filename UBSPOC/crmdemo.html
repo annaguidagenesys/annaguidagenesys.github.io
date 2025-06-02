@@ -10,7 +10,7 @@
 		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
         <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
 		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk-<hash>.min.js"></script>
+
 		
     <title>UBS CRM Demo</title>
     <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
@@ -129,11 +129,13 @@ client.loginImplicitGrant(
     // Get current conversation
   //  return conversationsApi.getConversation(currentConversationId);
    return conversationsApi.getConversation(conversationId);
+   .then(data => {
+    console.log(data);}
   
 }).then((conv) => { 
     currentConversation = conv;
 
-    return setupChatChannel();
+   // return setupChatChannel();
 }).then(data => {
     console.log('Finished Setup');
 
