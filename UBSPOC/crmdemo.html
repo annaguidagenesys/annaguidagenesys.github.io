@@ -154,7 +154,7 @@ client.loginImplicitGrant(
 }).catch(e => console.log(e));				
 //retrieveANI();
 //Kameliya
-const conversation = await conversationsApi.getConversation(conversationId);
+const conversation = conversationsApi.getConversation(conversationId);
 const caller = conversation.participants.find(p =>
 p.purpose === 'customer' || p.purpose === 'caller');
 
