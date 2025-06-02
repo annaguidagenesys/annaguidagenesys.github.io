@@ -138,8 +138,8 @@ client.loginImplicitGrant(
 	p.purpose === 'customer' || p.purpose === 'caller');
 
 
-    if (caller && caller.attributes) {
-         ani = caller.attributes['Call.Ani'];
+    if (caller) {
+         ani = caller.ani;
         console.log('Caller ANI:', ani);
     }
 })
