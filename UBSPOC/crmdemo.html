@@ -153,7 +153,11 @@ client.loginImplicitGrant(
 // Error Handling
 }).catch(e => console.log(e));				
 //retrieveANI();
-document.getElementById("telefono").value = conversationId;
+//Kameliya
+const ani = await getAniByConversationId(conversationId);
+console.log('ANI from participant attributes:', ani);
+//document.getElementById("telefono").value = conversationId;
+	    document.getElementById("telefono").value = ani;
 } );
 	
 	
