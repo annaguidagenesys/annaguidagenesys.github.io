@@ -164,18 +164,7 @@ client.loginImplicitGrant(
 // Error Handling
 }).catch(e => console.log(e));				
 //retrieveANI();
-//Kameliya
 
-.then((conversation) => {const caller = conversation.participants.find(p =>
-p.purpose === 'customer' || p.purpose === 'caller');
-
-
-    if (caller && caller.attributes) {
-        const ani = caller.attributes['Call.Ani'];
-        console.log('Caller ANI:', ani);
-    }
-})
-.catch((err) =>; console.error(err));
 
 //document.getElementById("telefono").value = conversationId;
 document.getElementById("telefono").value = ani;
