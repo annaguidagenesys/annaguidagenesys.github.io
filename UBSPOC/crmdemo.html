@@ -154,15 +154,27 @@ client.loginImplicitGrant(
 }).catch(e => console.log(e));				
 //retrieveANI();
 //Kameliya
-const conversation = conversationsApi.getConversation(conversationId);
-const caller = conversation.participants.find(p =>
-p.purpose === 'customer' || p.purpose === 'caller');
+async function getConversationDetails(conversationId) {
+try {
+const conversation = await conversationsApi.getConversation(conversationId);
 
 
-    if (caller && caller.attributes) {
-        const ani = caller.attributes['Call.Ani'];
-        console.log('Caller ANI:', ani);
+    // Find the customer participant
+    const customerParticipant = conversation.participants.find(
+        p => p.purpose === 'customer'
+    );
+
+    if (customerParticipant && customerParticipant.attributes) {
+        return customerParticipant.attributes.ani;
+    } else {
+        return null;
     }
+} catch (error) {
+    console.error('Error getting conversation details:', error);
+    throw error;
+}
+
+}
 
 //document.getElementById("telefono").value = conversationId;
 document.getElementById("telefono").value = ani;
