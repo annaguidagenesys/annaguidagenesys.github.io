@@ -164,7 +164,7 @@ const conversation = await conversationsApi.getConversation(conversationId);
         p => p.purpose === 'customer'
     );
 
-    if (customerParticipant && customerParticipant.attributes) {
+    if (customerParticipant) {
 	const ani = customerParticipant.attributes['Call.Ani'];
         console.log('Caller ANI:', ani);
        // return customerParticipant.attributes.ani;
@@ -180,7 +180,7 @@ const conversation = await conversationsApi.getConversation(conversationId);
 }
 
 //document.getElementById("telefono").value = conversationId;
-//document.getElementById("telefono").value = ani;
+document.getElementById("telefono").value = ani;
 } );
 	
 	
