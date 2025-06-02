@@ -141,6 +141,7 @@ client.loginImplicitGrant(
     if (caller) {
          ani = caller.ani;
         console.log('Caller ANI:', ani);
+		document.getElementById("telefono").value = ani;
     }
 })
 .catch((err) => console.error(err));
@@ -167,7 +168,7 @@ client.loginImplicitGrant(
 
 
 //document.getElementById("telefono").value = conversationId;
-document.getElementById("telefono").value = ani;
+//document.getElementById("telefono").value = ani;
 });
 	
 	
