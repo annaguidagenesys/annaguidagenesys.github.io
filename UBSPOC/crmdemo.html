@@ -165,7 +165,9 @@ const conversation = await conversationsApi.getConversation(conversationId);
     );
 
     if (customerParticipant && customerParticipant.attributes) {
-        return customerParticipant.attributes.ani;
+	const ani = customerParticipant.attributes['Call.Ani'];
+        console.log('Caller ANI:', ani);
+       // return customerParticipant.attributes.ani;
 	
     } else {
         return null;
