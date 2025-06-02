@@ -158,7 +158,7 @@ const caller = conversation.participants.find(p =>
 p.purpose === 'customer' || p.purpose === 'caller');
 
 
-    if (caller &&; caller.attributes) {
+    if (caller && caller.attributes) {
         const ani = caller.attributes['Call.Ani'];
         console.log('Caller ANI:', ani);
     }
