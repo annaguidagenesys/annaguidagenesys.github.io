@@ -50,6 +50,22 @@
   border: 0;
 
   cursor: pointer;
+ 
+}
+ table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 40%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ddddde;
 }
 </style/>
 
@@ -61,102 +77,92 @@
         </noscript>
 
   
-	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
+	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS Demo Directory</h1>
 
-	<fieldset>
+	
 	<br></br>
-	<legend>Customer Information</legend>
-      <label for="nome">Name: </label>
-      <input id="nome" type="text" name="nome" value="Anna" size="30" maxlength="30" />
+    <table>
+  <tr>
+    <th>Contact</th>
+    <th>Phone Number</th>
+  </tr>
+  <tr>
+    <td>Anna Guida</td>
+    <td><a href="tel:+491754316729" id="dial" value="+491754316729">+491754316729</a></td>
+  </tr>
+  <tr>
+    <td>Laurent Pret</td>
+    <td><a href="tel:+447468694808" id="dial" value="+447468694808">+447468694808</a></td>
+  </tr>
+  <tr>
+    <td>Kameliya Karakasheva</td>
+    <td><a href="tel:+41797228737" id="dial" value="+41797228737">+41797228737</a></td>
+  </tr>
+  <tr>
+    <td>Krzysztof Kułton</td>
+    <td><a href="tel:+48881821276" id="dial" value="+48881821276">+48881821276</a></td>
+  </tr>
+</table>
+</body>
+</html>
 	<br></br>
-      <label for="telefono">Phone: </label>
-      <input id="telefono" type="text" name="telefono" value="+49123456" size="30" maxlength="30" /> 
-	<br></br>
-    </fieldset>
+
 	
 	<br></br>
 
         <script type="text/javascript">
-            $(document).ready(() => {
-          //      let platformClient = window.require('platformClient');
-
-				
-
-
+           
+const clientId = '27b4cba3-cf71-40c2-8229-21624fed26dc';
+const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
-let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-let ani = '+123456';
-// API instances
-const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
-
-const urlParams = new URLSearchParams(window.location.search);
-currentConversationId = urlParams.get('conversationid');
-
-const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
-//const redirectUri = (new URL (window.location.href)).hostname == 'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' 
-//?                config.testUri : config.prodUri;
-
+const notificationsApi = new platformClient.NotificationsApi();
+const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant(
-    '27b4cba3-cf71-40c2-8229-21624fed26dc',
-    redirectUri,
-    { state: currentConversationId })
-.then(data => {
+client.setPersistSettings(true, 'test_app');
+
+ $(document).ready(() => {
+ 
+client.loginImplicitGrant(clientId, redirectUri)
+ .then(() => {
     console.log(data);
-
-    // Assign conversation id
-    currentConversationId = data.state;
-    
-    // Get Details of current User
-    return usersApi.getUsersMe();
-}).then(userMe => {
-    userId = userMe.id;
-
-    // Get current conversation
-  //  return conversationsApi.getConversation(currentConversationId);
- //  return conversationsApi.getConversation(conversationId);
-   
-   
-   conversationsApi.getConversation(currentConversationId)
-  .then((data) => {
-    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-	const caller = data.participants.find(p =>
-	p.purpose === 'customer' || p.purpose === 'caller');
-
-
-    if (caller) {
-         ani = caller.ani;
-        console.log('Caller ANI:', ani);
-		document.getElementById("telefono").value = ani.substring(5);
-    }
+return usersApi.getUsersMe();
+ })
+		.then((userMe) => {
+			console.log('userMe: ', userMe);
+			me = userMe;
+			return notificationsApi.postNotificationsChannels();
+			})
+		.then((channel) => {
+			console.log('channel: ', channel);
+			notificationChannel = channel;
+			
+			webSocket = new WebSocket(notificationChannel.connectUri);
+			webSocket.onmessage = handleNotification;
+			conversationsTopic = 'v2.users.' + me.id + '.conversations';
+			const body = [ { id: conversationsTopic } ];
+			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
 })
-.catch((err) => console.error(err));
-						  
-  })
-  .catch((err) => {
-    console.log('There was a failure calling getConversation');
-    console.error(err);
-  });
-   
-   
 
-  
-//}).then((conv) => { 
-  //  currentConversation = conv;
+			$('#dial').click(() => {
+				// Create request body
+				let body = {
+				ani = "";
+				document.getElementById("dial").value = ani;
+					'phoneNumber':$('ani').val()
+				};
 
-   // return setupChatChannel();
-//}).then(data => {
- //   console.log('Finished Setup');
+				// Invoke API
+				conversationsApi.postConversationsCalls(body).then(() => {
+					// Clear dialstring from text box
+					$('ani').val('');
+				}).catch((err) => console.error(err));
+			});
 
-// Error Handling
-//}).catch(e => console.log(e));				
-//retrieveANI();
-
-
-//document.getElementById("telefono").value = conversationId;
-//document.getElementById("telefono").value = ani;
+		})
+		.catch((err) => console.error(err));
+});
 });
 	
 	
