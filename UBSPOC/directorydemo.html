@@ -122,6 +122,7 @@ const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
  let ani= null;
+let me, webSocket, conversationsTopic, notificationChannel;
  document.getElementById("dial").value = ani;
  client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
