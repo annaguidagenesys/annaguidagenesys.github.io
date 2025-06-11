@@ -151,13 +151,14 @@ return usersApi.getUsersMe();
 				let body = {
 			
 				
-					'phoneNumber':$('+48881821276').val()
+					'phoneNumber':$('ani').val()
+					console.log('ani: ', ani);
 				};
 
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
 					// Clear dialstring from text box
-					$('+48881821276').val('');
+					$('ani').val('');
 				}).catch((err) => console.error(err));
 			});
 
