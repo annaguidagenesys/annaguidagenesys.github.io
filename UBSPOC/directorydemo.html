@@ -96,7 +96,7 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><button type="button" id="dial" class="num" value="+41797228737">+41797228737</button></td>
+    <td><button type="button" id="dial1" class="num" value="+41797228737">+41797228737</button></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
@@ -122,13 +122,13 @@ const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
  let ani= null;
-let me, webSocket, conversationsTopic, notificationChannel;
- document.getElementById("dial").value = ani;
-	 console.log('ani: ', ani);
+ let me, webSocket, conversationsTopic, notificationChannel;
+ document.getElementById("dial1").value = ani;
+ console.log('ani: ', ani);
  client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log('Logged in');
-return usersApi.getUsersMe();
+ return usersApi.getUsersMe();
  })
 		.then((userMe) => {
 			console.log('userMe: ', userMe);
@@ -147,7 +147,7 @@ return usersApi.getUsersMe();
 				
 })
 
-			$('#dial').click(() => {
+			$('#dial1').click(() => {
 				// Create request body
 				let body = {
 			
