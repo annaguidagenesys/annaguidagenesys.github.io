@@ -111,7 +111,7 @@ tr:nth-child(even) {
 	<br></br>
 
         <script type="text/javascript">
-           
+ $(document).ready(() => {        
 const clientId = '27b4cba3-cf71-40c2-8229-21624fed26dc';
 const redirectUri = window.location.href;
 const platformClient = require('platformClient');
@@ -121,9 +121,9 @@ const notificationsApi = new platformClient.NotificationsApi();
 const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
- $(document).ready(() => {
+ let ani= null;
  document.getElementById("dial").value = ani;
-client.loginImplicitGrant(clientId, redirectUri)
+ client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log(data);
 return usersApi.getUsersMe();
@@ -160,11 +160,7 @@ return usersApi.getUsersMe();
 				}).catch((err) => console.error(err));
 			});
 
-		})
-		.catch((err) => console.error(err));
-);
 });
-	
 	
 	let searchCustData = function () {
     let elem = document.createElement("script");
