@@ -125,7 +125,7 @@ client.setEnvironment('euc2.pure.cloud');
  document.getElementById("dial").value = ani;
  client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
-    console.log(data);
+    console.log('Logged in');
 return usersApi.getUsersMe();
  })
 		.then((userMe) => {
