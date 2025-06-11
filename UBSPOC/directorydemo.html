@@ -122,7 +122,7 @@ const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
  $(document).ready(() => {
- 
+ document.getElementById("dial").value = ani;
 client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log(data);
@@ -142,13 +142,14 @@ return usersApi.getUsersMe();
 			conversationsTopic = 'v2.users.' + me.id + '.conversations';
 			const body = [ { id: conversationsTopic } ];
 			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
+				
 })
 
 			$('#dial').click(() => {
 				// Create request body
 				let body = {
 			
-				document.getElementById("dial").value = ani;
+				
 					'phoneNumber':$('ani').val()
 				};
 
