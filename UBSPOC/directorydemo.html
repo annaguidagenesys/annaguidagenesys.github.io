@@ -88,19 +88,19 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Anna Guida</td>
-    <td><button value='+491754316729' onclick='dial()'>Click to Call</button></td>
+    <td><button id='1' name='+491754316729' onclick='dial(1)'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Laurent Pret</td>
-    <td><button value='+447468694808' onclick='dial()'>Click to Call</button></td>
+    <td><button id='2' name='+447468694808' onclick='dial(2)'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><button value='+41797228737' onclick='dial()'>Click to Call</button></td>
+    <td><button id='3' name='+41797228737' onclick='dial(3)'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
-    <td><button value='+48881821276' onclick='dial()'>Click to Call</button></td>
+    <td><button id='4' name='+48881821276' onclick='dial(4)'>Click to Call</button></td>
   </tr>
 </table>
 </body>
@@ -111,7 +111,7 @@ tr:nth-child(even) {
 	<br></br>
 
         <script type="text/javascript">
-function dial() {        
+function dial(clicked_id) {        
 const clientId = '27b4cba3-cf71-40c2-8229-21624fed26dc';
 const redirectUri = window.location.href;
 const platformClient = require('platformClient');
@@ -145,11 +145,11 @@ client.setEnvironment('euc2.pure.cloud');
 				
 })
  
-	 			
-				var href = document.querySelector('button').value;
+	 			 var temp = document.getElementById(clicked_id).getAttribute("name");
+				//var href = document.querySelector('button').value;
 				//alert('You clicked: ' + href);
 				let body = {
-				'phoneNumber':(href)
+				'phoneNumber':(temp)
 					
 					};
 				console.log('phoneNumber: ', body);
