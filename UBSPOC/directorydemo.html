@@ -149,8 +149,8 @@ client.setEnvironment('euc2.pure.cloud');
  
 			//document.querySelector('a').onclick = 
 	 			
-				var href = document.querySelector('a').href;
-				alert('You clicked: ' + href.substring(5));
+				var href = document.querySelector('a').id;
+				alert('You clicked: ' + href);
 				let body = {
 				'phoneNumber':(href.substring(5))
 					
