@@ -88,19 +88,19 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Anna Guida</td>
-    <td><a href="tel:+491754316729">Click to Call</a></td>
+    <td><a href='tel:+491754316729'>Click to Call</a></td>
   </tr>
   <tr>
     <td>Laurent Pret</td>
-    <td><a href="tel:+447468694808">Click to Call</a></td>
+    <td><a href='tel:+447468694808'>Click to Call</a></td>
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><a href="tel:+41797228737">Click to Call</a></td>
+    <td><a href='tel:+41797228737'>Click to Call</a></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
-    <td><a href="tel:+48881821276">Click to Call</a></td>
+    <td><a href='tel:+48881821276'>Click to Call</a></td>
   </tr>
 </table>
 </body>
@@ -123,8 +123,8 @@ client.setEnvironment('euc2.pure.cloud');
 
  let ani;
  let me, webSocket, conversationsTopic, notificationChannel;
- document.getElementById("dial3").value = ani;
- console.log('ani: ', ani);
+ //document.getElementById("dial3").value = ani;
+ //console.log('ani: ', ani);
  client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log('Logged in');
@@ -146,20 +146,17 @@ client.setEnvironment('euc2.pure.cloud');
 			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
 				
 })
-
-			$('#dial3').click(() => {
-				// Create request body
-					let body = {
-			
-				'phoneNumber':$('ani').val()
-			
-					
-				};
+ 
+			document.querySelector('a').onclick = function(e) {
+				var href = document.querySelector('a').href;
+				let body = {
+				'phoneNumber':$('href')
+					};}
 
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
 					// Clear dialstring from text box
-					$('ani').val('');
+					$('href').val('');
 				}).catch((err) => console.error(err));
 			});
 
