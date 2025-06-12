@@ -88,19 +88,19 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Anna Guida</td>
-    <td><button type="button" id="dial1" class="num" value="+491754316729">+491754316729</button></td>
+    <td><button type="button" id="dial" class="num" value="+491754316729">+491754316729</button></td>
   </tr>
   <tr>
     <td>Laurent Pret</td>
-    <td><button type="button" id="dial2" class="num" value="+447468694808">+447468694808</button></td>
+    <td><button type="button" id="dial" class="num" value="+447468694808">+447468694808</button></td>
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><button type="button" id="dial3" class="num" value="+41797228737">+41797228737</button></td>
+    <td><button type="button" id="dial" class="num" value="+41797228737">+41797228737</button></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
-    <td><button type="button" id="dial4" class="num" value="+48881821276">+48881821276</button></td>
+    <td><button type="button" id="dial" class="num" value="+48881821276">+48881821276</button></td>
   </tr>
 </table>
 </body>
@@ -147,22 +147,21 @@ client.setEnvironment('euc2.pure.cloud');
 				
 })
 
-			//$('#dial3').click(() => {
+			$('#dial').click(() => {
 				// Create request body
-	 console.log('Test');
-				let body = {
+					let body = {
 			
-				
-						'phoneNumber':'+41797228737'
+				'phoneNumber':$('ani').val()
+			
 					
 				};
 
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
 					// Clear dialstring from text box
-					$('+41797228737').val('');
+					$('ani').val('');
 				}).catch((err) => console.error(err));
-			//});
+			});
 
 });
 	
