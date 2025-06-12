@@ -151,9 +151,9 @@ client.setEnvironment('euc2.pure.cloud');
 				var href = document.querySelector('a').href;
 				let body = {
 				'phoneNumber':$('href')
-					console.log('href: ', href);
+					
 					};
-
+				console.log('href: ', href);
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
 					// Clear dialstring from text box
