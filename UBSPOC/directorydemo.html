@@ -7,17 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
-        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
 
 		
     <title>UBS Demo Directory</title>
     <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
 
-
 <style>
-	.cx-common-container .cx-titlebar .cx-icon {
+    .cx-common-container .cx-titlebar .cx-icon {
     float: left;
     width: 96px;
     height: 96px;
@@ -46,11 +45,8 @@
   border-radius: 14px;
   font-weight: bold;
   font-size: 16px;
-
   border: 0;
-
   cursor: pointer;
- 
 }
  table {
   font-family: arial, sans-serif;
@@ -74,12 +70,8 @@ tr:nth-child(even) {
     <body>
         <noscript>
             For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
-        </noscript>
-
-  
-	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS Demo Directory</h1>
-
-	
+        </noscript>  
+	 <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS Demo Directory</h1>
 	<br></br>
     <table>
   <tr>
@@ -105,12 +97,11 @@ tr:nth-child(even) {
 </table>
 </body>
 </html>
-	<br></br>
+<br></br>
+<br></br>
 
+<script type="text/javascript">
 	
-	<br></br>
-
-        <script type="text/javascript">
 function dial(clicked_id) {        
 const clientId = '27b4cba3-cf71-40c2-8229-21624fed26dc';
 const redirectUri = window.location.href;
@@ -121,9 +112,8 @@ const notificationsApi = new platformClient.NotificationsApi();
 const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
- let ani;
- let me, webSocket, conversationsTopic, notificationChannel;
- client.loginImplicitGrant(clientId, redirectUri)
+let me, webSocket, conversationsTopic, notificationChannel;
+client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log('Logged in');
  return usersApi.getUsersMe();
@@ -144,22 +134,18 @@ client.setEnvironment('euc2.pure.cloud');
 			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
 				
 })
- 
-	 			 var phone = document.getElementById(clicked_id).getAttribute("name");
+ 				var phone = document.getElementById(clicked_id).getAttribute("name");
 				let body = {
-				'phoneNumber':(phone)
-					
+				'phoneNumber':(phone)		
 					};
 				console.log('phoneNumber: ', body);
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
-		
 				}).catch((err) => console.error(err));
-	
 
 };
 	
-	let searchCustData = function () {
+    let searchCustData = function () {
     let elem = document.createElement("script");
     elem.setAttribute("type","text/javascript");
     elem.src = "./widgets.ubs.demo.js"
