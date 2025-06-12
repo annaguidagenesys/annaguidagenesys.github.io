@@ -111,7 +111,7 @@ tr:nth-child(even) {
 	<br></br>
 
         <script type="text/javascript">
- $(document).ready(() => {        
+function dial() {        
 const clientId = '27b4cba3-cf71-40c2-8229-21624fed26dc';
 const redirectUri = window.location.href;
 const platformClient = require('platformClient');
@@ -148,7 +148,7 @@ client.setEnvironment('euc2.pure.cloud');
 })
  
 			//document.querySelector('a').onclick = 
-	 			function dial() {
+	 			
 				var href = document.querySelector('a').href;
 				alert('You clicked: ' + href.substring(5));
 				let body = {
@@ -161,9 +161,9 @@ client.setEnvironment('euc2.pure.cloud');
 					// Clear dialstring from text box
 		
 				}).catch((err) => console.error(err));
-		};
+	
 
-});
+};
 	
 	let searchCustData = function () {
     let elem = document.createElement("script");
