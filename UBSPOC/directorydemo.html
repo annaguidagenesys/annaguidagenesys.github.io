@@ -145,17 +145,14 @@ client.setEnvironment('euc2.pure.cloud');
 				
 })
  
-	 			 var temp = document.getElementById(clicked_id).getAttribute("name");
-				//var href = document.querySelector('button').value;
-				//alert('You clicked: ' + href);
+	 			 var phone = document.getElementById(clicked_id).getAttribute("name");
 				let body = {
-				'phoneNumber':(temp)
+				'phoneNumber':(phone)
 					
 					};
 				console.log('phoneNumber: ', body);
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
-					// Clear dialstring from text box
 		
 				}).catch((err) => console.error(err));
 	
