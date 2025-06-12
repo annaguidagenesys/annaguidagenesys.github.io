@@ -96,7 +96,7 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><a href='+41797228737'  onclick='e()'>Click to Call</a></td>
+    <td><a href='tel:+41797228737'  onclick='dial()'>Click to Call</a></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
@@ -148,7 +148,7 @@ client.setEnvironment('euc2.pure.cloud');
 })
  
 			//document.querySelector('a').onclick = 
-	 			function e() {
+	 			function dial() {
 				var href = document.querySelector('a').href;
 				alert('You clicked: ' + href);
 				let body = {
