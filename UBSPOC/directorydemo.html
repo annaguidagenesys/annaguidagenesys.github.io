@@ -150,14 +150,14 @@ client.setEnvironment('euc2.pure.cloud');
 			document.querySelector('a').onclick = function(e) {
 				var href = document.querySelector('a').href;
 				let body = {
-				'phoneNumber':$('href')
+				'phoneNumber':(href)
 					
 					};
 				console.log('href: ', href);
 				// Invoke API
 				conversationsApi.postConversationsCalls(body).then(() => {
 					// Clear dialstring from text box
-					$('href').val('');
+		
 				}).catch((err) => console.error(err));
 		};
 
