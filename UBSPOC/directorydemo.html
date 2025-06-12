@@ -88,19 +88,19 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>Anna Guida</td>
-    <td><a id='+491754316729' onclick='dial()'>Click to Call</a></td>
+    <td><button id='+491754316729' onclick='dial()'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Laurent Pret</td>
-    <td><a id='+447468694808' onclick='dial()'>Click to Call</a></td>
+    <td><button id='+447468694808' onclick='dial()'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Kameliya Karakasheva</td>
-    <td><a id='+41797228737' onclick='dial()'>Click to Call</a></td>
+    <td><button id='+41797228737' onclick='dial()'>Click to Call</button></td>
   </tr>
   <tr>
     <td>Krzysztof Kułton</td>
-    <td><a id='+48881821276' onclick='dial()'>Click to Call</a></td>
+    <td><button id='+48881821276' onclick='dial()'>Click to Call</button></td>
   </tr>
 </table>
 </body>
@@ -123,8 +123,6 @@ client.setEnvironment('euc2.pure.cloud');
 
  let ani;
  let me, webSocket, conversationsTopic, notificationChannel;
- //document.getElementById("dial3").value = ani;
- //console.log('ani: ', ani);
  client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log('Logged in');
@@ -147,9 +145,8 @@ client.setEnvironment('euc2.pure.cloud');
 				
 })
  
-			//document.querySelector('a').onclick = 
 	 			
-				var href = document.querySelector('a').id;
+				var href = document.querySelector('button').value;
 				//alert('You clicked: ' + href);
 				let body = {
 				'phoneNumber':(href)
