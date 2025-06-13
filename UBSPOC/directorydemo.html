@@ -118,22 +118,7 @@ client.loginImplicitGrant(clientId, redirectUri)
     console.log('Logged in');
  return usersApi.getUsersMe();
  })
-	/*	.then((userMe) => {
-			console.log('userMe: ', userMe);
-			me = userMe;
-			return notificationsApi.postNotificationsChannels();
-			})
-		.then((channel) => {
-			console.log('channel: ', channel);
-			notificationChannel = channel;
-			
-			webSocket = new WebSocket(notificationChannel.connectUri);
-			//webSocket.onmessage = handleNotification;
-			conversationsTopic = 'v2.users.' + me.id + '.conversations';
-			const body = [ { id: conversationsTopic } ];
-			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
-				
-})*/
+	
  				var phone = document.getElementById(clicked_id).getAttribute("name");
 				let body = {
 				'phoneNumber':(phone)		
@@ -145,12 +130,7 @@ client.loginImplicitGrant(clientId, redirectUri)
 
 };
 	
-  /*  let searchCustData = function () {
-    let elem = document.createElement("script");
-    elem.setAttribute("type","text/javascript");
-    elem.src = "./widgets.ubs.demo.js"
-    document.head.appendChild(elem);
- }		*/
+ 
 			
         </script>
     </body>
