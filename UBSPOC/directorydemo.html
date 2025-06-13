@@ -112,7 +112,6 @@ const conversationsApi = new platformClient.ConversationsApi();
 const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
-let me, webSocket, conversationsTopic, notificationChannel;
 client.loginImplicitGrant(clientId, redirectUri)
  .then(() => {
     console.log('Logged in');
