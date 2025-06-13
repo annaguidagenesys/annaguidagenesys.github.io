@@ -108,7 +108,7 @@ const redirectUri = window.location.href;
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 const conversationsApi = new platformClient.ConversationsApi();
-const notificationsApi = new platformClient.NotificationsApi();
+//const notificationsApi = new platformClient.NotificationsApi();
 const usersApi = new platformClient.UsersApi();
 client.setEnvironment('euc2.pure.cloud');
 
@@ -118,7 +118,7 @@ client.loginImplicitGrant(clientId, redirectUri)
     console.log('Logged in');
  return usersApi.getUsersMe();
  })
-		.then((userMe) => {
+	/*	.then((userMe) => {
 			console.log('userMe: ', userMe);
 			me = userMe;
 			return notificationsApi.postNotificationsChannels();
@@ -133,7 +133,7 @@ client.loginImplicitGrant(clientId, redirectUri)
 			const body = [ { id: conversationsTopic } ];
 			return notificationsApi.putNotificationsChannelSubscriptions(notificationChannel.id, body);
 				
-})
+})*/
  				var phone = document.getElementById(clicked_id).getAttribute("name");
 				let body = {
 				'phoneNumber':(phone)		
@@ -145,11 +145,11 @@ client.loginImplicitGrant(clientId, redirectUri)
 
 };
 	
-    let searchCustData = function () {
+  /*  let searchCustData = function () {
     let elem = document.createElement("script");
     elem.setAttribute("type","text/javascript");
     elem.src = "./widgets.ubs.demo.js"
-    document.head.appendChild(elem);
+    document.head.appendChild(elem);*/
  }		
 			
         </script>
