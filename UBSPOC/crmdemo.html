@@ -99,7 +99,6 @@ const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
 let ani = '+123456';
-let emailaddress = null;
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -108,6 +107,8 @@ const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
+//const redirectUri = (new URL (window.location.href)).hostname == 'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' 
+//?                config.testUri : config.prodUri;
 
 client.setEnvironment('euc2.pure.cloud');
 client.loginImplicitGrant(
@@ -125,25 +126,22 @@ client.loginImplicitGrant(
 }).then(userMe => {
     userId = userMe.id;
 
+    // Get current conversation
+  //  return conversationsApi.getConversation(currentConversationId);
+ //  return conversationsApi.getConversation(conversationId);
+   
    
    conversationsApi.getConversation(currentConversationId)
   .then((data) => {
     console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 	const caller = data.participants.find(p =>
-	p.purpose === 'customer');
+	p.purpose === 'customer' || p.purpose === 'caller');
 
 
     if (caller) {
-         
-		 if (caller.getQueueMediaType().equals(QueueMediaType.EMAIL)){
-		 emailaddress = caller.emailaddress;
-		 console.log('Email:', emailaddress);
-		 document.getElementById("telefono").value = emailaddress;}
-		else if {
-		ani = caller.ani;
+         ani = caller.ani;
         console.log('Caller ANI:', ani);
 		document.getElementById("telefono").value = ani.substring(5);
-	
     }
 })
 .catch((err) => console.error(err));
