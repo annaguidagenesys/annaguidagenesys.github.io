@@ -75,7 +75,7 @@
       <label for="iban">IBAN: </label>
       <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
 	<br></br>
-      <label for="telefono">Phone: </label>
+      <label for="telefono">Phone/Email:</label>
       <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
 	<br></br>
     </fieldset>
@@ -123,20 +123,19 @@ client.loginImplicitGrant(
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
-
- 
+   
    
    conversationsApi.getConversation(currentConversationId)
   .then((data) => {
     console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 	const caller = data.participants.find(p =>
-	p.purpose === 'customer' || p.purpose === 'caller');
+	p.purpose === 'customer');
 
 
     if (caller) {
-         ani = caller.ani;
+         ani = caller.address;
         console.log('Caller ANI:', ani);
-		document.getElementById("telefono").value = ani.substring(5);
+	document.getElementById("telefono").value = ani.replace('tel:+','');
     }
 })
 .catch((err) => console.error(err));
@@ -147,6 +146,23 @@ client.loginImplicitGrant(
     console.error(err);
   });
    
+   
+
+  
+//}).then((conv) => { 
+  //  currentConversation = conv;
+
+   // return setupChatChannel();
+//}).then(data => {
+ //   console.log('Finished Setup');
+
+// Error Handling
+//}).catch(e => console.log(e));				
+//retrieveANI();
+
+
+//document.getElementById("telefono").value = conversationId;
+//document.getElementById("telefono").value = ani;
 });
 	
 	
