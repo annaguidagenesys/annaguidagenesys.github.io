@@ -63,30 +63,9 @@
   
 	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
 
-	<fieldset>
-	<br></br>
-	<legend>Customer Information</legend>
-      <label for="nome">Name: </label>
-      <input id="nome" type="text" name="nome" value="" size="30" maxlength="30" />
-	<br></br>
-	  <label for="conto">Account: </label>
-      <input id="conto" type="text" name="conto" value="" size="30" maxlength="30" />
-	<br></br>
-      <label for="iban">IBAN: </label>
-      <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
-	<br></br>
-      <label for="telefono">Phone: </label>
-      <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
-	<br></br>
-    </fieldset>
+
 	
 	<br></br>
-
-	<button class="button-91" id="messenger_btn" onclick="searchCustData()">
-	<!--<button id="messenger_btn" onclick="searchCustData()">-->
-	  Retrieve Customer Data 
-      </button>   
-
 
         <script type="text/javascript">
             $(document).ready(() => {
@@ -97,8 +76,7 @@
 
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
-let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-let ani = '+123456';
+let ani = '+123456789';
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -149,12 +127,13 @@ client.loginImplicitGrant(
    
 });
 	
+ let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + ani;
+    const res = await fetch(url);
+    if (res.ok) {
+       data = await res.json();
+      console.log("pippo" + JSON.stringify(data));
+    }	
 	
-	let searchCustData = function () {
-    let elem = document.createElement("script");
-    elem.setAttribute("type","text/javascript");
-    elem.src = "./widgets.ubs.demo.js"
-    document.head.appendChild(elem);
  }		
 			
         </script>
