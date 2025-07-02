@@ -107,8 +107,6 @@ const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
-//const redirectUri = (new URL (window.location.href)).hostname == 'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html/oauth/callback' 
-//?                config.testUri : config.prodUri;
 
 client.setEnvironment('euc2.pure.cloud');
 client.loginImplicitGrant(
@@ -125,10 +123,6 @@ client.loginImplicitGrant(
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
-
-    // Get current conversation
-  //  return conversationsApi.getConversation(currentConversationId);
- //  return conversationsApi.getConversation(conversationId);
    
    
    conversationsApi.getConversation(currentConversationId)
@@ -139,9 +133,9 @@ client.loginImplicitGrant(
 
 
     if (caller) {
-         ani = caller.ani;
+         ani = caller.address;
         console.log('Caller ANI:', ani);
-	document.getElementById("telefono").value = ani.substring(5);
+	document.getElementById("telefono").value = ani;
     }
 })
 .catch((err) => console.error(err));
