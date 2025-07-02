@@ -75,7 +75,7 @@
       <label for="iban">IBAN: </label>
       <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
 	<br></br>
-      <label for="telefono">Phone: </label>
+      <label for="telefono">Phone/Email: </label>
       <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
 	<br></br>
     </fieldset>
@@ -99,6 +99,7 @@ const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
 let ani = '+123456';
+let emailaddress = null;
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -124,19 +125,25 @@ client.loginImplicitGrant(
 }).then(userMe => {
     userId = userMe.id;
 
- 
    
    conversationsApi.getConversation(currentConversationId)
   .then((data) => {
     console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 	const caller = data.participants.find(p =>
-	p.purpose === 'customer' || p.purpose === 'caller');
+	p.purpose === 'customer');
 
 
     if (caller) {
-         ani = caller.ani;
+         
+		 if (caller.getQueueMediaType().equals(QueueMediaType.EMAIL)){
+		 emailaddress = caller.emailaddress;
+		 console.log('Email:', emailaddress);
+		 document.getElementById("telefono").value = emailaddress;}
+		else if {
+		ani = caller.ani;
         console.log('Caller ANI:', ani);
 		document.getElementById("telefono").value = ani.substring(5);
+	
     }
 })
 .catch((err) => console.error(err));
@@ -147,6 +154,23 @@ client.loginImplicitGrant(
     console.error(err);
   });
    
+   
+
+  
+//}).then((conv) => { 
+  //  currentConversation = conv;
+
+   // return setupChatChannel();
+//}).then(data => {
+ //   console.log('Finished Setup');
+
+// Error Handling
+//}).catch(e => console.log(e));				
+//retrieveANI();
+
+
+//document.getElementById("telefono").value = conversationId;
+//document.getElementById("telefono").value = ani;
 });
 	
 	
