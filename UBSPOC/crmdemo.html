@@ -135,7 +135,7 @@ client.loginImplicitGrant(
     if (caller) {
          ani = caller.address;
         console.log('Caller ANI:', ani);
-	document.getElementById("telefono").value = ani;
+	document.getElementById("telefono").value = ani.replace('tel:+','');
     }
 })
 .catch((err) => console.error(err));
