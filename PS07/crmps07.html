@@ -34,7 +34,7 @@
 
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
-let ani = '+123456789';
+//let ani = '+123456789';
 // API instances
 
 const usersApi = new platformClient.UsersApi();
@@ -73,8 +73,8 @@ client.loginImplicitGrant(
 
     if (caller) {
          ani = caller.ani;
-        console.log('Caller ANI:', ani);
-		ani = ani.substring(5);
+        ani = ani.substring(5);
+		console.log('Caller ANI:', ani);
     }
 })
 .catch((err) => console.error(err));
