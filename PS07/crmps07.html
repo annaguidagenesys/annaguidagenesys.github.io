@@ -35,7 +35,7 @@
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 var ani ;
-// API instances
+var participantId;
 
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -74,10 +74,13 @@ client.loginImplicitGrant(
     if (caller) {
          ani = caller.ani;
         ani = ani.substring(5);
+		participantId = caller.id;
 		console.log('drop ANI:', ani);
 		var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
 var iframe_url = url + ani;
 document.getElementById('iframecrm').src = iframe_url;
+
+
     }
 })
 .catch((err) => console.error(err));
@@ -89,11 +92,26 @@ document.getElementById('iframecrm').src = iframe_url;
   });
  	  
  
-	
+let AddPartData = function () {
+let bodyset = {"attributes": {"NumberIn": "DE12345678"; "StringIn": "Identified"}};
+conversationsApi.patchConversationParticipantAttributes(currentConversationId, participantId, bodyset);
+ .then(() => {
+    console.log('patchConversationParticipantAttributes returned successfully.');
+  })
+  .catch((err) => {
+    console.log('There was a failure calling patchConversationParticipantAttributes');
+    console.error(err);
+  });
+    }
  
 	
  		
 			
         </script>
+<button class="button-91" id="messenger_btn" onclick="AddPartData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Identified 
+</button> 
+
     </body>
 </html>
