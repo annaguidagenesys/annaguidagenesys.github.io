@@ -74,7 +74,10 @@ client.loginImplicitGrant(
     if (caller) {
          ani = caller.ani;
         ani = ani.substring(5);
-		console.log('new ANI:', ani);
+		console.log('drop ANI:', ani);
+		var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
+var iframe_url = url + ani;
+document.getElementById('iframecrm').src = iframe_url;
     }
 })
 .catch((err) => console.error(err));
@@ -85,9 +88,7 @@ client.loginImplicitGrant(
     console.error(err);
   });
  	  
- var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
-var iframe_url = url + ani;
-document.getElementById('iframecrm').src = iframe_url;
+ 
 	
  
 	
