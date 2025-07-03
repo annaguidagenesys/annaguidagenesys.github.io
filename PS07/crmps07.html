@@ -12,46 +12,7 @@
 		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
 
 		
-    <title>UBS CRM Demo</title>
-    <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
-
-
-<style>
-	.cx-common-container .cx-titlebar .cx-icon {
-    float: left;
-    width: 96px;
-    height: 96px;
-    margin-top: 200px
-   }
-   .gen-callback-customer-logo {
-    display: block;
-    width: 337px;
-    height: 96px;
-    background: url(UBS_Logo_Semibold.svg) no-repeat center;
-   }
-   label {
-    width: 80px;
-    display: inline-block;
-   }
-   legend {
-    color: red;
-    font-weight: bold
-   }
-   .button-91 {
-  color: #fff;
-  padding: 15px 25px;
-  background-color: #38D2D2;
-  background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
-  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
-  border-radius: 14px;
-  font-weight: bold;
-  font-size: 16px;
-
-  border: 0;
-
-  cursor: pointer;
-}
-</style/>
+ 
 
   </head>
 
@@ -60,24 +21,22 @@
             For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
         </noscript>
 
-  
-	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
-
-
 	
 	<br></br>
-
+ <iframe id="iframecrm" height=100% width=100% frameborder="0" scrolling="no" title='test'></iframe>      
+ 
         <script type="text/javascript">
-            $(document).ready(() => {
+          
           //      let platformClient = window.require('platformClient');
 
 				
-
+ 
 
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let ani = '+123456789';
 // API instances
+
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
@@ -91,6 +50,7 @@ client.loginImplicitGrant(
     'e8343917-f76d-4143-8f6a-43b3d5de1a9f',
     redirectUri,
     { state: currentConversationId })
+	
 .then(data => {
     console.log(data);
 
@@ -98,7 +58,7 @@ client.loginImplicitGrant(
     currentConversationId = data.state;
     
     // Get Details of current User
-    return usersApi.getUsersMe();
+   return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
 
@@ -118,23 +78,20 @@ client.loginImplicitGrant(
     }
 })
 .catch((err) => console.error(err));
-						  
+					  
   })
   .catch((err) => {
     console.log('There was a failure calling getConversation');
     console.error(err);
   });
-   
-});
+ 	  
+ var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
+var iframe_url = url + ani;
+document.getElementById('iframecrm').src = iframe_url;
 	
- let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + ani;
-    const res = await fetch(url);
-    if (res.ok) {
-       data = await res.json();
-      console.log("pippo" + JSON.stringify(data));
-    }	
+ 
 	
- }		
+ 		
 			
         </script>
     </body>
