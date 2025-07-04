@@ -24,9 +24,13 @@
 	
 	<br></br>
  <iframe id="iframecrm" height=100% width=100% frameborder="0" scrolling="no" title='test'></iframe>      
- 
+ <button class="button-91" id="messenger_btn" onclick="AddPartData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Identified 
+</button> 
+
         <script type="text/javascript">
-          
+     $(document).ready(() => {      
           //      let platformClient = window.require('platformClient');
 
 				
@@ -90,7 +94,7 @@ document.getElementById('iframecrm').src = iframe_url;
     console.log('There was a failure calling getConversation');
     console.error(err);
   });
- 	  
+ });	  
  
 let AddPartData = function () {
 let bodyset = {"attributes": {"NumberIn": "DE12345678"; "StringIn": "Identified"}};
@@ -108,10 +112,7 @@ conversationsApi.patchConversationParticipantAttributes(currentConversationId, p
  		
 			
         </script>
-<button class="button-91" id="messenger_btn" onclick="AddPartData()">
-	<!--<button id="messenger_btn" onclick="searchCustData()">-->
-	  Identified 
-</button> 
+
 
     </body>
 </html>
