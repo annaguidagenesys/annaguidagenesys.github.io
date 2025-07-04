@@ -30,7 +30,7 @@
 </button> 
 
         <script type="text/javascript">
-     $(document).ready(() => {      
+  //   $(document).ready(() => {      
           //      let platformClient = window.require('platformClient');
 
 				
@@ -95,6 +95,7 @@ document.getElementById('iframecrm').src = iframe_url;
     console.error(err);
   });
 	  
+// });
  
 let AddPartData = function () {
 let bodyset = {"attributes":{"NumberIn": "DE12345678","StringIn": "Identified"}};
@@ -108,7 +109,7 @@ conversationsApi.patchConversationParticipantAttributes(currentConversationId, p
   });
     }
  
-	 });
+	 
  		
 			
         </script>
