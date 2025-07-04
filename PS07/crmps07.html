@@ -97,7 +97,7 @@ document.getElementById('iframecrm').src = iframe_url;
  });	  
  
 let AddPartData = function () {
-let bodyset = {"attributes": {"NumberIn": "DE12345678"; "StringIn": "Identified"}};
+let bodyset = {"attributes":{"NumberIn": "DE12345678","StringIn": "Identified"}};
 conversationsApi.patchConversationParticipantAttributes(currentConversationId, participantId, bodyset);
  .then(() => {
     console.log('patchConversationParticipantAttributes returned successfully.');
