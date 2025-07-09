@@ -54,7 +54,7 @@ client.setEnvironment('mypurecloud.de');
 client.loginImplicitGrant(
     'e8343917-f76d-4143-8f6a-43b3d5de1a9f',
     redirectUri,
-    { state: currentConversationId })
+    { state: state })
 	
 .then(data => {
     console.log(data);
