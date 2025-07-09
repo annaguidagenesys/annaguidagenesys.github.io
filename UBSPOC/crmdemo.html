@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
-        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
 
 		
-    <title>UBS CRM Demo</title>
-    <!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
+<title>UBS CRM Demo</title>
+<!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
 
 
 <style>
@@ -90,11 +90,9 @@
 
         <script type="text/javascript">
             $(document).ready(() => {
-          //      let platformClient = window.require('platformClient');
+          //let platformClient = window.require('platformClient');
 
 				
-
-
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
@@ -105,6 +103,8 @@ const conversationsApi = new platformClient.ConversationsApi();
 
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
+currentInteractionType = urlParams.get('interactiontype');
+currentWorkitemId = urlParams.get('workitemid');
 
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
@@ -118,7 +118,7 @@ client.loginImplicitGrant(
 
     // Assign conversation id
     currentConversationId = data.state;
-	console.log('WorkItem ID: ', currentConversationId);
+console.log('WorkItem ID: ', currentConversationId);
     
     // Get Details of current User
     return usersApi.getUsersMe();
@@ -150,20 +150,7 @@ client.loginImplicitGrant(
    
 
   
-//}).then((conv) => { 
-  //  currentConversation = conv;
 
-   // return setupChatChannel();
-//}).then(data => {
- //   console.log('Finished Setup');
-
-// Error Handling
-//}).catch(e => console.log(e));				
-//retrieveANI();
-
-
-//document.getElementById("telefono").value = conversationId;
-//document.getElementById("telefono").value = ani;
 });
 	
 	
