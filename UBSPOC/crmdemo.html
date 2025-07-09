@@ -118,6 +118,7 @@ client.loginImplicitGrant(
 
     // Assign conversation id
     currentConversationId = data.state;
+	console.log('WorkItem ID: ', currentConversationId);
     
     // Get Details of current User
     return usersApi.getUsersMe();
