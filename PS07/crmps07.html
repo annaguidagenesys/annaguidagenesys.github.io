@@ -45,8 +45,9 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 const urlParams = new URLSearchParams(window.location.search);
-//currentConversationId = urlParams.get('conversationid');
-var state;
+currentConversationId = urlParams.get('conversationid');
+GCLanguage = urlParams.get('language');
+
 				
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmps07.html' ;
 
@@ -54,7 +55,11 @@ client.setEnvironment('mypurecloud.de');
 client.loginImplicitGrant(
     'e8343917-f76d-4143-8f6a-43b3d5de1a9f',
     redirectUri,
-    { state: state })
+      { state: JSON.stringify({
+        conversationId: currentConversationId,
+        language: GCLanguage
+    }) })
+	
 	
 .then(data => {
     console.log(data);
