@@ -65,7 +65,11 @@ client.loginImplicitGrant(
     console.log(data);
 
     // Assign conversation id
-    currentConversationId = data.state;
+	  // Assign conversation id
+    let stateData = JSON.parse(data.state);
+    currentConversationId = stateData.conversationId;
+    GCLanguage = stateData.language;
+    
     		console.log('TEST2:', currentConversationId);
     // Get Details of current User
    return usersApi.getUsersMe();
