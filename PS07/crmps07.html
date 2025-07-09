@@ -47,6 +47,7 @@ const conversationsApi = new platformClient.ConversationsApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 currentWorkitemId = urlParams.get('workitemid');
+currenttype = urlParams.get('interactiontype');
 
 				
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmps07.html' ;
@@ -57,7 +58,8 @@ client.loginImplicitGrant(
     redirectUri,
       { state: JSON.stringify({
         conversationId: currentConversationId,
-        workitemid: currentWorkitemId
+        workitemid: currentWorkitemId,
+		interactiontype: currenttype
     }) })
 	
 	
@@ -69,8 +71,9 @@ client.loginImplicitGrant(
     let stateData = JSON.parse(data.state);
     currentConversationId = stateData.conversationId;
     currentWorkitemId = stateData.workitemid;
+	currenttype = stateData.interactiontype;
     
-    		console.log('TEST2:', currentWorkitemId);
+    		console.log('TEST2:', currentWorkitemId + currenttype);
     // Get Details of current User
    return usersApi.getUsersMe();
 }).then(userMe => {
