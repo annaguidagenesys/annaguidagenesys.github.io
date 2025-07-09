@@ -45,7 +45,8 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 const urlParams = new URLSearchParams(window.location.search);
-currentConversationId = urlParams.get('conversationid');
+//currentConversationId = urlParams.get('conversationid');
+var state;
 		console.log('TEST1:', currentConversationId);
 		
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmps07.html' ;
