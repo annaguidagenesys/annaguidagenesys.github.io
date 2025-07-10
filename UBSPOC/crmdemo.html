@@ -114,7 +114,7 @@ client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri,{s
 
 .then(data => {
 console.log(data);
-
+console.log('WorkitemType:', currentInteractionType);
 //Assign conversation id
 currentConversationId = data.state;
 
@@ -143,7 +143,7 @@ conversationsApi.getConversation(currentConversationId)
 						     }
 	else {
 	console.log('WorkitemId:', currentWorkitemId);
-		console.log('WorkitemId:', currentInteractionType);
+		
 	}					  
   })
   .catch((err) => {
