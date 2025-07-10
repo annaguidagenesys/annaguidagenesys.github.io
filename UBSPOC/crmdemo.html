@@ -121,7 +121,8 @@ currentConversationId = data.state;
 return usersApi.getUsersMe();
 }).then(userMe => {
 userId = userMe.id;
-   
+   if (currentInteractionType === 'conversation'){
+ 
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
 	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
@@ -142,7 +143,10 @@ conversationsApi.getConversation(currentConversationId)
     console.error(err);
   });
    
-   
+}
+	else {
+	console.log('WorkitemId:', currentWorkitemId);
+	}
 
   
 
