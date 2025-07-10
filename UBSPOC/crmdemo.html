@@ -106,7 +106,8 @@ const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
-
+console.log('Workitem Type:', currentInteractionType);
+console.log('Workitem ID:', currentWorkitemId);
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
@@ -121,7 +122,7 @@ console.log(data);
 //Get Details of current User
 return usersApi.getUsersMe();
 }).then(userMe => {
-if (currentInteractionType === 'conversation'){	
+if (currentInteractionType == 'conversation'){	
 userId = userMe.id;
 
  
