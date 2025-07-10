@@ -111,7 +111,7 @@ console.log('Workitem ID:', currentWorkitemId);
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri)
+client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri, {state: currentConversationId, currentWorkitemId,currentInteractionType})
 
 .then(data => {
 console.log(data);
