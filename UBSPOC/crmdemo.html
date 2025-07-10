@@ -122,7 +122,7 @@ currentConversationId = data.state;
 return usersApi.getUsersMe();
 }).then(userMe => {
 userId = userMe.id;
-   if (currentInteractionType === 'conversation'){
+
  
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
