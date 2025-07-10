@@ -106,17 +106,17 @@ const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
-console.log('Workitem Type:', currentInteractionType);
+
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri,{state: currentConversationId, currentWorkitemId,currentInteractionType})
+client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri)
 
 .then(data => {
 console.log(data);
 
 //Assign conversation id
-currentConversationId = data.state;
+//currentConversationId = data.state;
 
 //Get Details of current User
 return usersApi.getUsersMe();
