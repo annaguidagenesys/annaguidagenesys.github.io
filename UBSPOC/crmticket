@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="plain/text; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="application/json"/>
+  <meta http-equiv="Content-Type" content="application/x-www-form-urlencoded"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
+        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+
+		
+ 
+
+  </head>
+
+    <body>
+        <noscript>
+            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
+        </noscript>
+
+	
+	<br></br>
+ <iframe id="iframecrm" height=100% width=100% frameborder="0" scrolling="no" title='test'></iframe>      
+ <button class="button-91" id="messenger_btn" onclick="AddPartData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Identified 
+</button> 
+
+        <script type="text/javascript">
+  //   $(document).ready(() => {      
+          //      let platformClient = window.require('platformClient');
+
+				
+ 
+
+const platformClient = require('platformClient');
+const client = platformClient.ApiClient.instance;
+var ani ;
+var participantId;
+
+const usersApi = new platformClient.UsersApi();
+const conversationsApi = new platformClient.ConversationsApi();
+
+const urlParams = new URLSearchParams(window.location.search);
+currentConversationId = urlParams.get('conversationid');
+currentWorkitemId = urlParams.get('workitemid');
+currenttype = urlParams.get('interactiontype');
+
+				
+const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmps07.html' ;
+
+client.setEnvironment('mypurecloud.de');
+client.loginImplicitGrant(
+    'e8343917-f76d-4143-8f6a-43b3d5de1a9f',
+    redirectUri,
+      { state: JSON.stringify({
+        conversationId: currentConversationId,
+        workitemid: currentWorkitemId,
+		interactiontype: currenttype
+    }) })
+	
+	
+.then(data => {
+    console.log(data);
+
+    // Assign conversation id
+	  // Assign conversation id
+    let stateData = JSON.parse(data.state);
+    currentConversationId = stateData.conversationId;
+    currentWorkitemId = stateData.workitemid;
+	currenttype = stateData.interactiontype;
+    
+    		console.log('TEST2:', currentWorkitemId + currenttype);
+    // Get Details of current User
+   return usersApi.getUsersMe();
+}).then(userMe => {
+    userId = userMe.id;
+
+ 
+   
+   conversationsApi.getConversation(currentConversationId)
+  .then((data) => {
+    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+	const caller = data.participants.find(p =>
+	p.purpose === 'customer' || p.purpose === 'caller');
+
+
+    if (caller) {
+         ani = caller.ani;
+        ani = ani.substring(5);
+		participantId = caller.id;
+		console.log('drop ANI:', ani);
+		var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
+var iframe_url = url + ani;
+document.getElementById('iframecrm').src = iframe_url;
+
+
+    }
+})
+.catch((err) => console.error(err));
+					  
+  })
+  .catch((err) => {
+    console.log('There was a failure calling getConversation');
+    console.error(err);
+  });
+	  
+// });
+ 
+let AddPartData = function () {
+let bodyset = {"attributes":{"NumberIn": "DE12345678","StringIn": "Identified"}};
+conversationsApi.patchConversationParticipantAttributes(currentConversationId, participantId, bodyset)
+ .then(() => {
+    console.log('patchConversationParticipantAttributes returned successfully.');
+  })
+  .catch((err) => {
+    console.log('There was a failure calling patchConversationParticipantAttributes');
+    console.error(err);
+  });
+    }
+ 
+	 
+ 		
+			
+        </script>
+
+
+    </body>
+</html>
