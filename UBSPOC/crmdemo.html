@@ -121,13 +121,14 @@ currentConversationId = data.state;
 //Get Details of current User
 return usersApi.getUsersMe();
 }).then(userMe => {
-	if (currentInteractionType === 'conversation'){
+	
 userId = userMe.id;
 
  
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
 	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+	if (currentInteractionType === 'conversation'){					      
 	const caller = data.participants.find(p =>
 	p.purpose === 'customer');
 
@@ -135,7 +136,11 @@ conversationsApi.getConversation(currentConversationId)
 	ani = caller.address;
 	console.log('Caller ANI:', ani);
 	document.getElementById("telefono").value = ani.replace('tel:+','');
-}
+          }
+	}
+						      else {
+	console.log('WorkitemId:', currentWorkitemId);
+	}
   })
 .catch((err) => console.error(err));
 						  
@@ -144,11 +149,6 @@ conversationsApi.getConversation(currentConversationId)
     console.log('There was a failure calling getConversation');
     console.error(err);
   });
-   
-}
-	else {
-	console.log('WorkitemId:', currentWorkitemId);
-	}
 
   
 
