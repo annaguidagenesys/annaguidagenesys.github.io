@@ -90,13 +90,14 @@
 
         <script type="text/javascript">
             $(document).ready(() => {
-          //let platformClient = window.require('platformClient');
+          
 
 				
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
 let ani = '+123456';
+
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
@@ -109,36 +110,30 @@ currentWorkitemId = urlParams.get('workitemid');
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant(
-    '27b4cba3-cf71-40c2-8229-21624fed26dc',
-    redirectUri,
-    { state: currentConversationId })
+client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri,{state: currentConversationId, currentWorkitemId,currentInteractionType})
 .then(data => {
-    console.log(data);
+console.log(data);
 
-    // Assign conversation id
-    currentConversationId = data.state;
-console.log('WorkItem ID: ', currentConversationId);
-    
-    // Get Details of current User
-    return usersApi.getUsersMe();
+//Assign conversation id
+currentConversationId = data.state;
+
+//Get Details of current User
+return usersApi.getUsersMe();
 }).then(userMe => {
-    userId = userMe.id;
+userId = userMe.id;
    
-   
-   conversationsApi.getConversation(currentConversationId)
-  .then((data) => {
-    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+conversationsApi.getConversation(currentConversationId)
+.then((data) => {
+	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 	const caller = data.participants.find(p =>
 	p.purpose === 'customer');
 
-
-    if (caller) {
-         ani = caller.address;
-        console.log('Caller ANI:', ani);
+	if (caller) {
+	ani = caller.address;
+	console.log('Caller ANI:', ani);
 	document.getElementById("telefono").value = ani.replace('tel:+','');
-    }
-})
+}
+  })
 .catch((err) => console.error(err));
 						  
   })
@@ -154,7 +149,7 @@ console.log('WorkItem ID: ', currentConversationId);
 });
 	
 	
-	let searchCustData = function () {
+    let searchCustData = function () {
     let elem = document.createElement("script");
     elem.setAttribute("type","text/javascript");
     elem.src = "./widgets.ubs.demo.js"
