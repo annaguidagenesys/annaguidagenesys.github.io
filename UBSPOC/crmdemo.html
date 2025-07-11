@@ -104,21 +104,26 @@ const conversationsApi = new platformClient.ConversationsApi();
 
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
-const currentInteractionType = urlParams.get('interactiontype');
-const currentWorkitemId = urlParams.get('workitemid');
-console.log('Workitem Type:', currentInteractionType);
-console.log('Workitem ID:', currentWorkitemId);
+currentInteractionType = urlParams.get('interactiontype');
+currentWorkitemId = urlParams.get('workitemid');
+
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri)
+client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri, {state: JSON.stringify({ conversationid:currentConversationId, workitemid: currentWorkitemId,interactiontype:currentInteractionType})})
 
 .then(data => {
 console.log(data);
 
 //Assign conversation id
 //currentConversationId = data.state;
-
+	
+let stateData = JSON.parse(data.state);
+currentConversationId = stateData.conversationid;
+currentWorkitemId = stateData.workitemid;
+currenttype = stateData.interactiontype;
+console.log('Workitem Type:', currentInteractionType);
+console.log('Workitem ID:', currentWorkitemId);	
 /Get Details of current User
 return usersApi.getUsersMe();
 }).then(userMe => {
