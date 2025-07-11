@@ -102,7 +102,7 @@ let ticketid='11111';
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
-
+const taskmgmtApi = new platformClient.TaskManagementApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
@@ -154,10 +154,11 @@ conversationsApi.getConversation(currentConversationId)
 						     }
 	else {
 	console.log('WorkitemId:', currentWorkitemId);
-       let taskmgmtApi = new platformClient.TaskManagementApi();
+       
 	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
 		.then((data) => {
-		ticketid = data.customFields.ticketid_identifier
+		ticketid = data.customFields.ticketid_identifier;
+		console.log(`getWorkItem success! data: ${JSON.stringify(data, null, 2)}`);
    console.log('TicketId:', ticketid);
   })
   .catch((err) => {
