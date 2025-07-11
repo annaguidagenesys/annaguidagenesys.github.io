@@ -139,7 +139,7 @@ if (currentInteractionType == 'conversation'){
  
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
-	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+	//console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 					      
 	const caller = data.participants.find(p =>
 	p.purpose === 'customer');
@@ -159,7 +159,7 @@ conversationsApi.getConversation(currentConversationId)
 	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
 		.then((data) => {
 		ticketid = data.customFields.ticketid_identifier;
-		console.log(`getWorkItem success! data: ${JSON.stringify(data, null, 2)}`);
+		//console.log(`getWorkItem success! data: ${JSON.stringify(data, null, 2)}`);
    console.log('TicketId:', ticketid);
   })
   .catch((err) => {
