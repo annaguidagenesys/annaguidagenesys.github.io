@@ -104,8 +104,8 @@ const conversationsApi = new platformClient.ConversationsApi();
 
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
-currentInteractionType = urlParams.get('interactiontype');
-currentWorkitemId = urlParams.get('workitemid');
+const currentInteractionType = urlParams.get('interactiontype');
+const currentWorkitemId = urlParams.get('workitemid');
 console.log('Workitem Type:', currentInteractionType);
 console.log('Workitem ID:', currentWorkitemId);
 const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
@@ -119,7 +119,7 @@ console.log(data);
 //Assign conversation id
 //currentConversationId = data.state;
 
-//Get Details of current User
+/Get Details of current User
 return usersApi.getUsersMe();
 }).then(userMe => {
 if (currentInteractionType == 'conversation'){	
@@ -147,9 +147,9 @@ conversationsApi.getConversation(currentConversationId)
 		
 	}					  
   })
-  .catch((err) => {
+ .catch((err) => {
     console.log('There was a failure calling getConversation');
-    console.error(err);
+   console.error(err);
   });
 
   
