@@ -82,8 +82,9 @@ else {
 	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
 	.then((data) => {
 		        ticketid = data.customFields.ticketid_identifier;
-			console.log('TicketId:', ticketid);	
-			var iframe_url  = ('https://assist-uat1.ubstest.net/servicedesk/',ticketid);
+			console.log('TicketId:', ticketid);
+			var url ='https://assist-uat1.ubstest.net/servicedesk/';
+			var iframe_url  = url + ticketid;
 		        console.log('iframe_url:', iframe_url);	
 			document.getElementById('iframecrm').src = iframe_url;
   })
