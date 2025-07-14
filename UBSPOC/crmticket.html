@@ -69,7 +69,7 @@ if (currentInteractionType == 'conversation'){
 
 const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
-var iframe_url = 'https://mail.yahoo.com/';
+var iframe_url = 'https://www.google.com/maps';
 document.getElementById('iframecrm').src = iframe_url; }
 
 })
@@ -81,7 +81,7 @@ else {
 	.then((data) => {
 		        ticketid = data.customFields.ticketid_identifier;
 			console.log('TicketId:', ticketid);	
-			var iframe_url  = ('https://mail.yahoo.com/',ticketid);
+			var iframe_url  = (https://www.google.com/maps/',ticketid);
 			document.getElementById('iframecrm').src = iframe_url;
   })
   .catch((err) => {
