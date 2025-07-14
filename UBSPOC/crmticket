@@ -71,7 +71,7 @@ if (currentInteractionType == 'conversation'){
 
 const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
-var iframe_url = 'https://assist-uat1.ubstest.net/servicedesk';
+var iframe_url = 'https://mail.yahoo.com/';
 document.getElementById('iframecrm').src = iframe_url; }
 
 })
@@ -83,7 +83,7 @@ else {
 	.then((data) => {
 		        ticketid = data.customFields.ticketid_identifier;
 			console.log('TicketId:', ticketid);	
-			var iframe_url  = ('https://assist-uat1.ubstest.net/servicedesk/',ticketid);
+			var iframe_url  = ('https://mail.yahoo.com/',ticketid);
 			document.getElementById('iframecrm').src = iframe_url;
   })
   .catch((err) => {
