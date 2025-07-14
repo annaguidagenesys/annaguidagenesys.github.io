@@ -70,7 +70,9 @@ if (currentInteractionType == 'conversation'){
 const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
 var iframe_url = 'https://www.google.com/maps';
-document.getElementById('iframecrm').src = iframe_url; }
+	console.log('iframe_url:', iframe_url);
+document.getElementById('iframecrm').src = iframe_url; 
+}
 
 })
 .catch((err) => console.error(err));
@@ -82,6 +84,7 @@ else {
 		        ticketid = data.customFields.ticketid_identifier;
 			console.log('TicketId:', ticketid);	
 			var iframe_url  = ('https://www.google.com/maps/',ticketid);
+		console.log('iframe_url:', iframe_url);	
 			document.getElementById('iframecrm').src = iframe_url;
   })
   .catch((err) => {
