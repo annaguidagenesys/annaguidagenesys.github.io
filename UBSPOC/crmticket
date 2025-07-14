@@ -73,10 +73,8 @@ const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
 var url  = 'https://assist-uat1.ubstest.net/servicedesk';
 var iframe_url = url + ani;
-document.getElementById('iframecrm').src = iframe_url;
+document.getElementById('iframecrm').src = iframe_url; }
 
-
-    }
 })
 .catch((err) => console.error(err));
 					  
