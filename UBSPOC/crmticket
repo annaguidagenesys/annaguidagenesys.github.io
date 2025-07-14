@@ -71,38 +71,30 @@ if (currentInteractionType == 'conversation'){
 
 const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
-var url  = 'https://assist-uat1.ubstest.net/servicedesk';
-var iframe_url = url + ani;
+var iframe_url = 'https://assist-uat1.ubstest.net/servicedesk';
 document.getElementById('iframecrm').src = iframe_url; }
 
 })
 .catch((err) => console.error(err));
-					  
+}
+else {
+        console.log('WorkitemId:', currentWorkitemId);
+	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
+	.then((data) => {
+		        ticketid = data.customFields.ticketid_identifier;
+			console.log('TicketId:', ticketid);	
+			var iframe_url  = ('https://assist-uat1.ubstest.net/servicedesk/',ticketid);
+			document.getElementById('iframecrm').src = iframe_url;
   })
   .catch((err) => {
-    console.log('There was a failure calling getConversation');
+    console.log('There was a failure.');
     console.error(err);
   });
 	  
-// });
- 
-let AddPartData = function () {
-let bodyset = {"attributes":{"NumberIn": "DE12345678","StringIn": "Identified"}};
-conversationsApi.patchConversationParticipantAttributes(currentConversationId, participantId, bodyset)
- .then(() => {
-    console.log('patchConversationParticipantAttributes returned successfully.');
-  })
-  .catch((err) => {
-    console.log('There was a failure calling patchConversationParticipantAttributes');
-    console.error(err);
-  });
-    }
- 
-	 
+ };
+});
  		
 			
         </script>
-
-
     </body>
 </html>
