@@ -69,8 +69,8 @@ if (currentInteractionType == 'conversation'){
 
 const caller = data.participants.find(p => p.purpose === 'customer');
 if (caller) {
-var iframe_url = 'https://www.google.com/maps';
-	console.log('iframe_url:', iframe_url);
+var iframe_url = 'https://assist-uat1.ubstest.net/servicedesk';
+console.log('iframe_url:', iframe_url);
 document.getElementById('iframecrm').src = iframe_url; 
 }
 
@@ -83,8 +83,8 @@ else {
 	.then((data) => {
 		        ticketid = data.customFields.ticketid_identifier;
 			console.log('TicketId:', ticketid);	
-			var iframe_url  = ('https://www.google.com/maps/',ticketid);
-		console.log('iframe_url:', iframe_url);	
+			var iframe_url  = ('https://assist-uat1.ubstest.net/servicedesk/',ticketid);
+		        console.log('iframe_url:', iframe_url);	
 			document.getElementById('iframecrm').src = iframe_url;
   })
   .catch((err) => {
