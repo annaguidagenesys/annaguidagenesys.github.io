@@ -7,60 +7,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-control" content="no-cache">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/javascript/132.0.0/purecloud-platform-client-v2.min.js"></script>
-        <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
-		<script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
-
-		
- 
-
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/226.0.0/purecloud-platform-client-v2.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
   </head>
-
     <body>
         <noscript>
             For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
         </noscript>
 
-	
 	<br></br>
  <iframe id="iframecrm" height=100% width=100% frameborder="0" scrolling="no" title='test'></iframe>      
- <button class="button-91" id="messenger_btn" onclick="AddPartData()">
-	<!--<button id="messenger_btn" onclick="searchCustData()">-->
-	  Identified 
-</button> 
+// <button class="button-91" id="messenger_btn" onclick="AddPartData()">
+//	<!--<button id="messenger_btn" onclick="searchCustData()">--> Identified </button> 
 
-        <script type="text/javascript">
-  //   $(document).ready(() => {      
-          //      let platformClient = window.require('platformClient');
-
-				
- 
+<script type="text/javascript">
 
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
-var ani ;
-var participantId;
+let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78';
+let ticketid='11111';
 
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
-
+const taskmgmtApi = new platformClient.TaskManagementApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
+currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
-currenttype = urlParams.get('interactiontype');
 
 				
-const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmps07.html' ;
+const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmticket' ;
 
-client.setEnvironment('mypurecloud.de');
+client.setEnvironment('euc2.pure.cloud');
 client.loginImplicitGrant(
-    'e8343917-f76d-4143-8f6a-43b3d5de1a9f',
+    '27b4cba3-cf71-40c2-8229-21624fed26dc',
     redirectUri,
       { state: JSON.stringify({
-        conversationId: currentConversationId,
+        conversationid:currentConversationId,
         workitemid: currentWorkitemId,
-		interactiontype: currenttype
-    }) })
+	interactiontype:currentInteractionType}) })
 	
 	
 .then(data => {
