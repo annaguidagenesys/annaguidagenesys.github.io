@@ -37,7 +37,7 @@ currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
 				
-const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmticket' ;
+const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmticket.html' ;
 
 client.setEnvironment('euc2.pure.cloud');
 client.loginImplicitGrant(
