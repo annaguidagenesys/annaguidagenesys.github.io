@@ -50,36 +50,28 @@ client.loginImplicitGrant(
 	
 	
 .then(data => {
-    console.log(data);
+console.log(data);
 
-    // Assign conversation id
-	  // Assign conversation id
-    let stateData = JSON.parse(data.state);
-    currentConversationId = stateData.conversationId;
-    currentWorkitemId = stateData.workitemid;
-	currenttype = stateData.interactiontype;
-    
-    		console.log('TEST2:', currentWorkitemId + currenttype);
-    // Get Details of current User
-   return usersApi.getUsersMe();
+let stateData = JSON.parse(data.state);
+currentConversationId = stateData.conversationid;
+currentWorkitemId = stateData.workitemid;
+currentInteractionType = stateData.interactiontype;
+
+console.log('Workitem Type + ID:', currentInteractionType + currentWorkitemId);
+
+return usersApi.getUsersMe();
+
 }).then(userMe => {
-    userId = userMe.id;
+userId = userMe.id;
 
- 
-   
-   conversationsApi.getConversation(currentConversationId)
-  .then((data) => {
-    console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-	const caller = data.participants.find(p =>
-	p.purpose === 'customer' || p.purpose === 'caller');
+if (currentInteractionType == 'conversation'){	
 
+ conversationsApi.getConversation(currentConversationId)
+.then((data) => {
 
-    if (caller) {
-         ani = caller.ani;
-        ani = ani.substring(5);
-		participantId = caller.id;
-		console.log('drop ANI:', ani);
-		var url    = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=';
+const caller = data.participants.find(p => p.purpose === 'customer');
+if (caller) {
+var url  = 'https://assist-uat1.ubstest.net/servicedesk';
 var iframe_url = url + ani;
 document.getElementById('iframecrm').src = iframe_url;
 
