@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="plain/text; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="application/json"/>
+  <meta http-equiv="Content-Type" content="application/x-www-form-urlencoded"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/226.0.0/purecloud-platform-client-v2.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+
+		
+<title>UBS CRM Demo</title>
+<!--<script type="text/javascript" src="jquery-3.3.1.min.js">-->
+
+
+<style>
+	.cx-common-container .cx-titlebar .cx-icon {
+    float: left;
+    width: 96px;
+    height: 96px;
+    margin-top: 200px
+   }
+   .gen-callback-customer-logo {
+    display: block;
+    width: 337px;
+    height: 96px;
+    background: url(UBS_Logo_Semibold.svg) no-repeat center;
+   }
+   label {
+    width: 80px;
+    display: inline-block;
+   }
+   legend {
+    color: red;
+    font-weight: bold
+   }
+   .button-91 {
+  color: #fff;
+  padding: 15px 25px;
+  background-color: #38D2D2;
+  background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 16px;
+
+  border: 0;
+
+  cursor: pointer;
+}
+</style/>
+
+  </head>
+
+    <body>
+        <noscript>
+            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
+        </noscript>
+
+  
+	  <h1><i class="gen-callback-customer-logo" style="font-size:48px;"></i>UBS CRM Demo</h1>
+
+	<fieldset>
+	<br></br>
+	<legend>Customer Information</legend>
+      <label for="nome">Name: </label>
+      <input id="nome" type="text" name="nome" value="" size="30" maxlength="30" />
+	<br></br>
+	  <label for="conto">Account: </label>
+      <input id="conto" type="text" name="conto" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="iban">IBAN: </label>
+      <input id="iban" type="text" name="iban" value="" size="30" maxlength="30" />
+	<br></br>
+      <label for="telefono">Phone/Email:</label>
+      <input id="telefono" type="text" name="telefono" value="" size="30" maxlength="30" /> 
+	<br></br>
+    </fieldset>
+	
+	<br></br>
+
+	<button class="button-91" id="messenger_btn" onclick="searchCustData()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Retrieve Customer Data 
+      </button>   
+
+
+        <script type="text/javascript">
+            $(document).ready(() => {
+          
+
+				
+const platformClient = require('platformClient');
+//const platformClient = require("purecloud-platform-client-v2");
+const client = platformClient.ApiClient.instance;
+let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
+let ani = '+123456';
+let ticketid='11111';
+
+// API instances
+const usersApi = new platformClient.UsersApi();
+const conversationsApi = new platformClient.ConversationsApi();
+const taskmgmtApi = new platformClient.TaskManagementApi();
+const urlParams = new URLSearchParams(window.location.search);
+currentConversationId = urlParams.get('conversationid');
+currentInteractionType = urlParams.get('interactiontype');
+currentWorkitemId = urlParams.get('workitemid');
+
+const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
+
+client.setEnvironment('euc2.pure.cloud');
+client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri, {state: 
+										JSON.stringify({ conversationid:currentConversationId,
+											         workitemid: currentWorkitemId,
+										                 interactiontype:currentInteractionType})})
+
+.then(data => {
+console.log(data);
+
+
+let stateData = JSON.parse(data.state);
+currentConversationId = stateData.conversationid;
+currentWorkitemId = stateData.workitemid;
+currentInteractionType = stateData.interactiontype;
+	
+console.log('Workitem Type + ID:', currentInteractionType + currentWorkitemId);
+
+return usersApi.getUsersMe();
+	
+}).then(userMe => {
+	userId = userMe.id;
+if (currentInteractionType == 'conversation'){	
+
+	
+
+ 
+conversationsApi.getConversation(currentConversationId)
+.then((data) => {
+	//console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+					      
+	const caller = data.participants.find(p =>
+	p.purpose === 'customer');
+
+	if (caller) {
+	ani = caller.address;
+	console.log('Caller ANI:', ani);
+	document.getElementById("telefono").value = ani.replace('tel:+','');
+          }
+	
+  })
+.catch((err) => console.error(err));
+						     }
+	else {
+	console.log('WorkitemId:', currentWorkitemId);
+       
+	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
+		.then((data) => {
+		ticketid = data.customFields.ticketid_identifier;
+		//console.log(`getWorkItem success! data: ${JSON.stringify(data, null, 2)}`);
+   console.log('TicketId:', ticketid);
+  })
+  .catch((err) => {
+    console.log("There was a failure calling getTaskmanagementWorkitem");
+    console.error(err);
+  });
+	}					  
+  })
+ .catch((err) => {
+    console.log('There was a failure calling getConversation');
+   console.error(err);
+  });
+
+  
+
+});
+	
+	
+    let searchCustData = function () {
+    let elem = document.createElement("script");
+    elem.setAttribute("type","text/javascript");
+    elem.src = "./widgets.ubs.demo.js"
+    document.head.appendChild(elem);
+ }		
+			
+        </script>
+    </body>
+</html>
