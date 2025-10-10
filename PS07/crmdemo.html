@@ -109,10 +109,10 @@ currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
-const redirectUri =  'https://annaguidagenesys.github.io/UBSPOC/crmdemo.html' ;
+const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
 
-client.setEnvironment('euc2.pure.cloud');
-client.loginImplicitGrant('27b4cba3-cf71-40c2-8229-21624fed26dc', redirectUri, {state: 
+client.setEnvironment('mypurecloud.de');
+client.loginImplicitGrant('e8343917-f76d-4143-8f6a-43b3d5de1a9f', redirectUri, {state: 
 										JSON.stringify({ conversationid:currentConversationId,
 											         workitemid: currentWorkitemId,
 										                 interactiontype:currentInteractionType})})
