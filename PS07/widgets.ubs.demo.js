@@ -20,7 +20,13 @@ function cx_getElement(id) {
    
     async function crmget()  {
 	   let data;
-    let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
+	   if ( v_customerPhone.includes("@");)
+	   {
+    let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?email_address=' + v_customerPhone;
+	}
+	else {
+		let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?ani=' + v_customerPhone;
+	}
     const res = await fetch(url);
     if (res.ok) {
        data = await res.json();
