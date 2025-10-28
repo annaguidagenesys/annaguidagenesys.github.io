@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it" xml:lang="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="plain/text; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="application/json"/>
+  <meta http-equiv="Content-Type" content="application/x-www-form-urlencoded"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/226.0.0/purecloud-platform-client-v2.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.7/purecloud-client-app-sdk.js"></script>
+  </head>
+    <body>
+        <noscript>
+            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.
+        </noscript>
+
+	<br></br>
+ <iframe id="iframecrm" height=100% width=100% frameborder="0" scrolling="no" title='test'></iframe>    
+
+<script type="text/javascript">
+
+const platformClient = require('platformClient');
+const client = platformClient.ApiClient.instance;
+let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78';
+let ticketid='11111';
+
+const usersApi = new platformClient.UsersApi();
+const conversationsApi = new platformClient.ConversationsApi();
+const taskmgmtApi = new platformClient.TaskManagementApi();
+const urlParams = new URLSearchParams(window.location.search);
+currentConversationId = urlParams.get('conversationid');
+currentInteractionType = urlParams.get('interactiontype');
+currentWorkitemId = urlParams.get('workitemid');
+
+				
+const redirectUri =  'https://localhost/SourceSystem/sourcesys.html' ;
+
+client.setEnvironment('euc2.pure.cloud');
+client.loginImplicitGrant(
+    '27b4cba3-cf71-40c2-8229-21624fed26dc',
+    redirectUri,
+      { state: JSON.stringify({
+        conversationid:currentConversationId,
+        workitemid: currentWorkitemId,
+	interactiontype:currentInteractionType}) })
+	
+	
+.then(data => {
+console.log(data);
+
+let stateData = JSON.parse(data.state);
+currentConversationId = stateData.conversationid;
+currentWorkitemId = stateData.workitemid;
+currentInteractionType = stateData.interactiontype;
+
+console.log('Workitem Type + ID:', currentInteractionType + currentWorkitemId);
+
+return usersApi.getUsersMe();
+
+}).then(userMe => {
+userId = userMe.id;
+
+if (currentInteractionType == 'conversation'){	
+
+ conversationsApi.getConversation(currentConversationId)
+.then((data) => {
+
+const caller = data.participants.find(p => p.purpose === 'customer');
+if (caller) {
+var iframe_url = 'https://assist-uat1.ubstest.net/servicedesk';
+console.log('iframe_url:', iframe_url);
+document.getElementById('iframecrm').src = iframe_url; 
+}
+
+})
+.catch((err) => console.error(err));
+}
+else {
+        console.log('WorkitemId:', currentWorkitemId);
+	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
+	.then((data) => {
+		        ticketid = data.customFields.ticketid_identifier;
+				var url =  data.customFields.sourcesysurl_url;
+				console.log('TicketId:', ticketid, 'Browser', url);
+			
+			var iframe_url  = 'https://' + url + '/' + ticketid;
+		        console.log('iframe_url:', iframe_url);	
+			document.getElementById('iframecrm').src = iframe_url;
+  })
+  .catch((err) => {
+    console.log('There was a failure.');
+    console.error(err);
+  });
+	  
+ };
+});
+ 		
+			
+        </script>
+    </body>
+</html>
