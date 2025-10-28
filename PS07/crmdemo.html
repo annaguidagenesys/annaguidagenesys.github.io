@@ -158,11 +158,11 @@ conversationsApi.getConversation(currentConversationId)
        
 	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
 		.then((data) => {
-		ticketid = data.customFields.ticketid_identifier;
+		
 		email_customer = data.customFields.email_address_text
 		
-		//console.log(`getWorkItem success! data: ${JSON.stringify(data, null, 2)}`);
-   console.log('TicketId:', ticketid);
+		console.log('Email Cust:', email_customer);
+   
    document.getElementById("telefono").value = email_customer;
   })
   .catch((err) => {
