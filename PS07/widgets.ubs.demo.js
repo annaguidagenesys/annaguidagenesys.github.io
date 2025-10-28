@@ -20,7 +20,7 @@ function cx_getElement(id) {
    
     async function crmget()  {
 	   let data;
-	   if ( v_customerPhone.includes("@");)
+	   if ( v_customerPhone.includes("@"))
 	   {
     let url = 'https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/TestUBS/?email_address=' + v_customerPhone;
 	}
