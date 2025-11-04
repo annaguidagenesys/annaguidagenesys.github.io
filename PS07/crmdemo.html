@@ -94,11 +94,11 @@
 
 				
 const platformClient = require('platformClient');
-//const platformClient = require("purecloud-platform-client-v2");
+
 const client = platformClient.ApiClient.instance;
 let conversationId = '73e22507-062a-477b-880b-05f8d4ea2c78'; // String | conversation ID
-let ani = '+123456';
-let ticketid='11111';
+let ani = '+';
+let ticketid='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
@@ -131,7 +131,7 @@ console.log('Workitem Type + ID:', currentInteractionType + currentWorkitemId);
 return usersApi.getUsersMe();
 	
 }).then(userMe => {
-	userId = userMe.id;
+	
 if (currentInteractionType == 'conversation'){	
 
 	
