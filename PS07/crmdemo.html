@@ -112,7 +112,8 @@ currentWorkitemId = urlParams.get('workitemid');
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
 
 client.setEnvironment('mypurecloud.de');
-client.loginImplicitGrant('e8343917-f76d-4143-8f6a-43b3d5de1a9f', redirectUri, {state: 
+client.loginPKCEGrant(
+    'fdb24b12-1035-4c64-9851-fd48971416a6', redirectUri, {state: 
 										JSON.stringify({ conversationid:currentConversationId,
 											         workitemid: currentWorkitemId,
 										                 interactiontype:currentInteractionType})})
