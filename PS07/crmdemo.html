@@ -122,23 +122,13 @@ client.loginPKCEGrant(
 .then(data => {
 console.log(data);
 
-
-let stateData = JSON.parse(data.state);
-currentConversationId = stateData.conversationid;
-currentWorkitemId = stateData.workitemid;
-currentInteractionType = stateData.interactiontype;
-	
-console.log('Workitem Type + ID:', currentInteractionType + currentWorkitemId);
-
 return usersApi.getUsersMe();
 	
 }).then(userMe => {
 	
 if (currentInteractionType == 'conversation'){	
 
-	
-
- 
+	 
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
 	//console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
