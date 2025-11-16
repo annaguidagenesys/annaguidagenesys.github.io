@@ -111,6 +111,7 @@ currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
+let state ;
 
 client.setEnvironment('mypurecloud.de');
 client.loginPKCEGrant(
@@ -143,8 +144,11 @@ conversationsApi.getConversation(currentConversationId)
           }
 	
   })
-.catch((err) => console.error(err));
-						     }
+	.catch((err) => {
+		console.log('There was a failure calling getConversation');
+	console.error(err);
+	});
+	}
 	else {
 	console.log('WorkitemId:', currentWorkitemId);
        
@@ -163,12 +167,7 @@ conversationsApi.getConversation(currentConversationId)
   });
 	}					  
   })
- .catch((err) => {
-    console.log('There was a failure calling getConversation');
-   console.error(err);
-  });
-
-  
+ 
 
 });
 	
