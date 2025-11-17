@@ -111,18 +111,22 @@ currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
-let state ;
-
+let stateunique = JSON.stringify({ conversationid:currentConversationId,
+											         workitemid: currentWorkitemId,
+										                 interactiontype:currentInteractionType}) ;
 client.setEnvironment('mypurecloud.de');
 client.loginPKCEGrant(
-    'fdb24b12-1035-4c64-9851-fd48971416a6', redirectUri, {state: 
-										JSON.stringify({ conversationid:currentConversationId,
-											         workitemid: currentWorkitemId,
-										                 interactiontype:currentInteractionType})})
+    'fdb24b12-1035-4c64-9851-fd48971416a6', redirectUri, {state: stateunique })
 
 .then(data => {
 console.log(data);
-
+let stateData = data.state;
+if (stateData != stateunique )
+{
+    console.log("Wrong State");
+	throw new Error("Wrong State");;
+	}
+	
 return usersApi.getUsersMe();
 	
 }).then(userMe => {
