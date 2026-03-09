@@ -143,16 +143,17 @@ conversationsApi.getConversation(currentConversationId)
 .then((data) => {
 	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 					      
-	const caller = data.participants.find(p =>
+	 caller = data.participants.find(p =>
 	p.purpose === 'customer');
-
+     participant-agent = data.participants.find(k =>
+	k.purpose === 'agent');
+	
 	if (caller) {
 	ani = caller.address;
 	console.log('Caller ANI:', ani);
 	document.getElementById("telefono").value = ani.replace('tel:+','');
-          }
-	const participant-agent = data.participants.find(k =>
-	k.purpose === 'agent');
+          };
+	
 	if (participant-agent){
 	p-id= participant-agent.id
 	console.log('Agent P-ID:', p-id)}
