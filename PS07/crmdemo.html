@@ -200,7 +200,7 @@ let MarkDone = function () { }
   "notes": "Test123",
   "state": "disconnected",
   "wrapupSkipped": true}; 
-		apiInstance.patchConversationsCallParticipant(conversationId, pid, body)
+		conversationsApi.patchConversationsCallParticipant(conversationId, pid, body)
   .then(() => {
     console.log('patchConversationsCallParticipant returned successfully.');
   })
