@@ -87,7 +87,12 @@
 	  Retrieve Customer Data 
       </button>   
 
-
+	<button class="button-91" id="messenger_btn" onclick="MarkDone()">
+	<!--<button id="messenger_btn" onclick="searchCustData()">-->
+	  Make Work Done 
+      </button>  
+	  
+	  
         <script type="text/javascript">
             $(document).ready(() => {
           
@@ -136,7 +141,7 @@ if (currentInteractionType == 'conversation'){
 	 
 conversationsApi.getConversation(currentConversationId)
 .then((data) => {
-	//console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
+	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
 					      
 	const caller = data.participants.find(p =>
 	p.purpose === 'customer');
@@ -181,7 +186,8 @@ conversationsApi.getConversation(currentConversationId)
     elem.setAttribute("type","text/javascript");
     elem.src = "./widgets.ubs.demo.js"
     document.head.appendChild(elem);
- }		
+ }	;
+let markDone = function () { } 
 			
         </script>
     </body>
