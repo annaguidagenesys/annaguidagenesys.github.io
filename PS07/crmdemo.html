@@ -105,7 +105,7 @@ client.setPersistSettings(true);
 let conversationId = ''; // String | conversation ID
 let ani = '';
 let ticketid='';
-let p-id='';
+let pid='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
@@ -157,8 +157,8 @@ conversationsApi.getConversation(currentConversationId)
           };
 	
 	if (participant-agent){
-	p-id= participant-agent.id
-	console.log('Agent P-ID:', p-id)}
+	pid= participant-agent.id
+	console.log('Agent PID:', pid)}
   })
 	.catch((err) => {
 		console.log('There was a failure calling getConversation');
