@@ -51,7 +51,7 @@
 
   cursor: pointer;
 }
-</style/>
+</style>
 
   </head>
 
@@ -87,7 +87,7 @@
 	  Retrieve Customer Data 
       </button>   
 
-	<button class="button-91" id="messenger_btn" onclick="MarkDone()">
+	<button class="button-91" id="done_btn" onclick="MarkDone()">
 	<!--<button id="messenger_btn" onclick="searchCustData()">-->
 	  Make Work Done 
       </button>  
@@ -145,7 +145,8 @@ conversationsApi.getConversation(currentConversationId)
 					      
 	 caller = data.participants.find(p =>
 	p.purpose === 'customer');
-     participant-agent = data.participants.find(k =>
+     
+	participantagent = data.participants.find(k =>
 	k.purpose === 'agent');
 	
 	if (caller) {
