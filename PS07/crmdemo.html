@@ -94,7 +94,7 @@
 	  
 	  
         <script type="text/javascript">
-            $(document).ready(() => {
+     //       $(document).ready(() => {
           
 
 				
@@ -109,7 +109,7 @@ let pid='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
-let conversationsApi = new platformClient.ConversationsApi();
+const conversationsApi = new platformClient.ConversationsApi();
 const taskmgmtApi = new platformClient.TaskManagementApi();
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
@@ -185,7 +185,8 @@ conversationsApi.getConversation(currentConversationId)
   })
  
 
-});
+//}
+);
 	
 	
     let searchCustData = function () {
