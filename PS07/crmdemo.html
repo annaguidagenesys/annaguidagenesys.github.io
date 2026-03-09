@@ -150,8 +150,12 @@ conversationsApi.getConversation(currentConversationId)
 	ani = caller.address;
 	console.log('Caller ANI:', ani);
 	document.getElementById("telefono").value = ani.replace('tel:+','');
-          }
-	
+          };
+	const participant-agent = data.participants.find(p =>
+	p.purpose === 'agent');
+	if (participant-agent){
+	p-id= participant-agent.id
+	console.log('Agent P-ID:', p-id);}
   })
 	.catch((err) => {
 		console.log('There was a failure calling getConversation');
