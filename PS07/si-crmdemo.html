@@ -106,7 +106,7 @@
 			<div class="action">
                 <h4 class="actionName">Voice / Schrift</h4>
                 
-                <select id='statusDropDown'>
+                <select id='JoinQ_DropDown'>
                     <option value="9b13acd4-13b8-4d6f-9fd6-197a7d17bd8b|true">Join Voice</option>
                     <option value="9b13acd4-13b8-4d6f-9fd6-197a7d17bd8b|false">Unjoin Voice</option>
 					<option value="9b13acd4-13b8-4d6f-9fd6-197a7d17bd8b|true">Join Schrift</option>
@@ -223,7 +223,7 @@ conversationsApi.getConversations()
   
   
   let JoinQueue = function () { 
-  var v_id= document.getElementById("JoinQ_btn").value;
+  var v_id= document.getElementById("JoinQ_DropDown").value;
   console.log(v_id + "###"  );
   let queueId = v_id.split("|")[0];
   console.log(v_id + "###" + queueId );
