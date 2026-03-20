@@ -188,7 +188,7 @@ let MarkDone = function () {
   }
 }; 
   
-		UserApi.putUserState(userId, body)
+		usersApi.putUserState(userId, body)
   .then(() => {
     console.log('status changed successfully.');
   })
