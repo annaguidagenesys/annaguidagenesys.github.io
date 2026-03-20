@@ -166,7 +166,7 @@ conversationsApi.getConversations()
     console.log(`getConversations success! data: ${JSON.stringify(data, null, 2)}`);
 	if ( data.total > 0)
 	{ conversationId = data.entities[0].id ;
-		participantagent = data.entity[0].participants.find(k =>
+		participantagent = data.entities[0].participants.find(k =>
 	k.purpose === 'agent');
 	
 	
