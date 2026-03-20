@@ -225,6 +225,7 @@ conversationsApi.getConversations()
   let JoinQueue = function () { 
   var v_id= document.getElementById("JoinQ_btn").value;
   let queueId = v_id.split("|")[0];
+  console.log(v_id + "###" + queueId );
 		let body = {
   "joined": v_id.split("|")[1]
  }; 
