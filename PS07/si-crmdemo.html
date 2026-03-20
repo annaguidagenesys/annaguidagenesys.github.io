@@ -115,7 +115,7 @@ client.setPersistSettings(true);
 let conversationId = ''; // String | conversation ID
 let ani = '';
 let ticketid='';
-let pid='';
+let userId='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
@@ -147,7 +147,7 @@ return usersApi.getUsersMe();
 	
 }).then(userMe => {
 	
-
+userId=userMe.id
 					  
   })
  
@@ -188,7 +188,7 @@ let MarkDone = function () {
   }
 }; 
   
-		UserApi.putUserState(userMe.id, body)
+		UserApi.putUserState(userId, body)
   .then(() => {
     console.log('status changed successfully.');
   })
