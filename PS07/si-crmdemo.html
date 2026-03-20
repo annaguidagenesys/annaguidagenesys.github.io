@@ -126,7 +126,7 @@ currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
-const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
+const redirectUri =  'https://annaguidagenesys.github.io/PS07/si-crmdemo.html' ;
 let stateunique = JSON.stringify({ conversationid:currentConversationId,
 											         workitemid: currentWorkitemId,
 										                 interactiontype:currentInteractionType}) ;
@@ -147,51 +147,8 @@ return usersApi.getUsersMe();
 	
 }).then(userMe => {
 	
-if (currentInteractionType == 'conversation'){	
 
-	 
-conversationsApi.getConversation(currentConversationId)
-.then((data) => {
-	console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-					      
-	 caller = data.participants.find(p =>
-	p.purpose === 'customer');
-     
-	participantagent = data.participants.find(k =>
-	k.purpose === 'agent');
-	
-	if (caller) {
-	ani = caller.address;
-	console.log('Caller ANI:', ani);
-	document.getElementById("telefono").value = ani.replace('tel:+','');
-          };
-	
-	if (participantagent){
-	pid= participantagent.id
-	console.log('Agent PID:', pid)}
-  })
-	.catch((err) => {
-		console.log('There was a failure calling getConversation');
-	console.error(err);
-	});
-	}
-	else {
-	console.log('WorkitemId:', currentWorkitemId);
-       
-	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
-		.then((data) => {
-		
-		email_customer = data.customFields.email_address_text
-		
-		console.log('Email Cust:', email_customer);
-   
-   document.getElementById("telefono").value = email_customer;
-  })
-  .catch((err) => {
-    console.log("There was a failure calling getTaskmanagementWorkitem");
-    console.error(err);
-  });
-	}					  
+					  
   })
  
 
