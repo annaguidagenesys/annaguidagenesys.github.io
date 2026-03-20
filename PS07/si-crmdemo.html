@@ -119,6 +119,7 @@ let userId='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
+const presenceApi = new platformClient.PresenceApi();
 const conversationsApi = new platformClient.ConversationsApi();
 const taskmgmtApi = new platformClient.TaskManagementApi();
 const urlParams = new URLSearchParams(window.location.search);
@@ -163,6 +164,15 @@ userId=userMe.id
     document.head.appendChild(elem);
  }	;
 let MarkDone = function () { 
+
+conversationsApi.getConversations()
+  .then((data) => {
+    console.log(`getConversations success! data: ${JSON.stringify(data, null, 2)}`);
+  })
+  .catch((err) => {
+    console.log('There was a failure calling getConversations');
+    console.error(err);
+  })
 		let body = {"name": "AG_Drohanruf",
   "code": "ab712d52-860c-4007-9770-62b650d6aee4",
   "notes": "Test123",
@@ -188,7 +198,7 @@ let MarkDone = function () {
   }
 }; 
   
-		usersApi.putUserState(userId, body)
+		PresenceApi.patchUserPresencesPurecloud(userId, body)
   .then(() => {
     console.log('status changed successfully.');
   })
