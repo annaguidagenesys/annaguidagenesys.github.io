@@ -116,6 +116,7 @@ let conversationId = ''; // String | conversation ID
 let ani = '';
 let ticketid='';
 let userId='';
+let pid='';
 
 // API instances
 const usersApi = new platformClient.UsersApi();
@@ -123,9 +124,7 @@ const presenceApi = new platformClient.PresenceApi();
 const conversationsApi = new platformClient.ConversationsApi();
 const taskmgmtApi = new platformClient.TaskManagementApi();
 const urlParams = new URLSearchParams(window.location.search);
-currentConversationId = urlParams.get('conversationid');
-currentInteractionType = urlParams.get('interactiontype');
-currentWorkitemId = urlParams.get('workitemid');
+
 
 const redirectUri =  'https://annaguidagenesys.github.io/PS07/si-crmdemo.html' ;
 let stateunique = JSON.stringify({ conversationid:currentConversationId,
@@ -168,7 +167,26 @@ let MarkDone = function () {
 conversationsApi.getConversations()
   .then((data) => {
     console.log(`getConversations success! data: ${JSON.stringify(data, null, 2)}`);
+	
+	conversationId = data.entity[0].id;
+	
+	caller = data.entity[0].participants.find(p =>
+	p.purpose === 'customer');
+     
+	participantagent = data.entity[0].participants.find(k =>
+	k.purpose === 'agent');
+	
+	if (caller) {
+	ani = caller.address;
+	console.log('Caller ANI:', ani);
+	document.getElementById("telefono").value = ani.replace('tel:+','');
+          };
+	
+	if (participantagent){
+	pid= participantagent.id
+	console.log('Agent PID:', pid)}
   })
+
   .catch((err) => {
     console.log('There was a failure calling getConversations');
     console.error(err);
@@ -178,7 +196,7 @@ conversationsApi.getConversations()
   "notes": "Test123",
   "state": "disconnected",
   "wrapupSkipped": true}; 
-		conversationsApi.patchConversationsCallParticipant(currentConversationId, pid, body)
+		conversationsApi.patchConversationsCallParticipant(conversationId, pid, body)
   .then(() => {
     console.log('patchConversationsCallParticipant returned successfully.');
   })
