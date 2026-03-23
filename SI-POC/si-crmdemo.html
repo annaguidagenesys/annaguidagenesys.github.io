@@ -142,7 +142,7 @@ const redirectUri =  'https://annaguidagenesys.github.io/SI-POC/si-crmdemo.html'
 let stateunique = JSON.stringify({ conversationid:conversationId  }) ;
 client.setEnvironment('mypurecloud.de');
 client.loginPKCEGrant(
-    'fdb24b12-1035-4c64-9851-fd48971416a6', redirectUri, {state: stateunique })
+    '64ef2b3a-64b4-477d-a7aa-3f9d010f60f1', redirectUri, {state: stateunique })
 
 .then(data => {
 console.log(data);
