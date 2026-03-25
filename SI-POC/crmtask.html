@@ -82,11 +82,8 @@
 	
 	<br></br>
 
-	<button class="button-91" id="messenger_btn" onclick="searchCustData()">
-	<!--<button id="messenger_btn" onclick="searchCustData()">-->
-	  Retrieve Customer Data 
-      </button>   
-
+<img src="InsureioCRM.png" alt="CRM Task" width="500" height="600">
+	
 	<button class="button-91" id="done_btn" onclick="MarkDone()">
 	<!--<button id="messenger_btn" onclick="searchCustData()">-->
 	  Make Work Done 
@@ -116,13 +113,13 @@ currentConversationId = urlParams.get('conversationid');
 currentInteractionType = urlParams.get('interactiontype');
 currentWorkitemId = urlParams.get('workitemid');
 
-const redirectUri =  'https://annaguidagenesys.github.io/PS07/crmdemo.html' ;
+const redirectUri =  'https://annaguidagenesys.github.io/SI-POC/crmtask.html' ;
 let stateunique = JSON.stringify({ conversationid:currentConversationId,
 											         workitemid: currentWorkitemId,
 										                 interactiontype:currentInteractionType}) ;
 client.setEnvironment('mypurecloud.de');
 client.loginPKCEGrant(
-    'fdb24b12-1035-4c64-9851-fd48971416a6', redirectUri, {state: stateunique })
+    '64ef2b3a-64b4-477d-a7aa-3f9d010f60f1', redirectUri, {state: stateunique })
 
 .then(data => {
 console.log(data);
@@ -150,12 +147,7 @@ conversationsApi.getConversation(currentConversationId)
 	participantagent = data.participants.find(k =>
 	k.purpose === 'agent');
 	
-	if (caller) {
-	ani = caller.address;
-	console.log('Caller ANI:', ani);
-	document.getElementById("telefono").value = ani.replace('tel:+','');
-          };
-	
+		
 	if (participantagent){
 	pid= participantagent.id
 	console.log('Agent PID:', pid)}
@@ -188,16 +180,10 @@ conversationsApi.getConversation(currentConversationId)
 //}
 //);
 	
-	
-    let searchCustData = function () {
-    let elem = document.createElement("script");
-    elem.setAttribute("type","text/javascript");
-    elem.src = "./widgets.ubs.demo.js"
-    document.head.appendChild(elem);
- }	;
+
 let MarkDone = function () { 
-		let body = {"name": "AG_Drohanruf",
-  "code": "ab712d52-860c-4007-9770-62b650d6aee4",
+		let body = {"name": "",
+  "code": "",
   "notes": "Test123",
   "state": "disconnected",
   "wrapupSkipped": true}; 
