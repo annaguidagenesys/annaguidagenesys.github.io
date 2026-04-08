@@ -141,26 +141,13 @@ conversationsApi.getConversation(currentConversationId)
 	}
 	else {
 	console.log('WorkitemId:', currentWorkitemId);
-       
-	taskmgmtApi.getTaskmanagementWorkitem(currentWorkitemId)
-		.then((data) => {
-		
-		email_customer = data.customFields.email_address_text
-		
-		console.log('Email Cust:', email_customer);
-   
-   document.getElementById("telefono").value = email_customer;
-  })
-  .catch((err) => {
-    console.log("There was a failure calling getTaskmanagementWorkitem");
-    console.error(err);
+      
+	
+  }
+  
   });
-	}					  
-  })
+						  
  
-
-//}
-//);
 	
 
 let MarkDone = function () { 
