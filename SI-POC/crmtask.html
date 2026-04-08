@@ -169,6 +169,7 @@ let MarkDone = function () {
   "notes": "Test123",
   "state": "disconnected",
   "wrapupSkipped": true}; 
+  if (currentInteractionType == 'conversation'){	
 		conversationsApi.patchConversationsCallParticipant(currentConversationId, pid, body)
   .then(() => {
     console.log('patchConversationsCallParticipant returned successfully.');
@@ -177,7 +178,12 @@ let MarkDone = function () {
     console.log('There was a failure calling patchConversationsCallParticipant');
     console.error(err);
   });
-  } 
+  }
+else{
+let body = {"statusId": ""};
+taskmgmtApi.postTaskmanagementWorkitemTerminate(currentWorkitemId, body)
+}
+}  
         </script>
     </body>
 </html>
