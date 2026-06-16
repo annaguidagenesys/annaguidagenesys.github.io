@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Übersicht mit Tabs und Suche</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: #2b2b2b;
+      background: #ffffff;
+    }
+
+    .page {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #e8f0f6;
+      margin-top: 40px;
+    }
+
+    .tab-button {
+      border: none;
+      background: #e8f0f6;
+      color: #102c45;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .tab-button:hover {
+      background: #d7e4ee;
+    }
+
+    .tab-button.active {
+      background: #0b3355;
+      color: #ffffff;
+    }
+
+    .tab-panel {
+      display: none;
+      width: 100%;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .section-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      margin: 14px 0 8px;
+    }
+
+    .table-info {
+      text-align: center;
+      margin: 8px 0 10px;
+      font-size: 14px;
+    }
+
+    .search-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .search-row label {
+      font-weight: bold;
+      color: #102c45;
+    }
+
+    .search-row input {
+      width: 320px;
+      max-width: 90%;
+      padding: 9px 12px;
+      border: 1px solid #b8c7d3;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    .search-row input:focus {
+      outline: none;
+      border-color: #0b3355;
+      box-shadow: 0 0 0 2px rgba(11, 51, 85, 0.15);
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 10px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    table.data-table thead {
+      background: #0b3355;
+      color: #ffffff;
+    }
+
+    table.data-table th,
+    table.data-table td {
+      padding: 12px 16px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    table.data-table th {
+      font-weight: bold;
+      font-size: 17px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    table.data-table th:hover {
+      background: #14476f;
+    }
+
+    table.data-table th .sort-icon {
+      margin-left: 6px;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    table.data-table tbody tr:nth-child(even) {
+      background: #f7f9fb;
+    }
+
+    table.data-table tbody tr:hover {
+      background: #eef4fa;
+    }
+
+    .loading,
+    .error,
+    .empty {
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+    }
+
+    .error {
+      color: #b00020;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- Tabs -->
+    <div class="tab-bar" role="tablist">
+      <button
+        class="tab-button active"
+        type="button"
+        data-tab-target="customerTeamPanel"
+      >
+        Kundenteam
+      </button>
+	  
+	   <button
+        class="tab-button active"
+        type="button"
+        data-tab-target="UKServicePanel"
+      >
+        Offene UK-Service
+      </button>
+	  
+	  <button
+        class="tab-button"
+        type="button"
+        data-tab-target="DokumentePanel"
+      >
+        Dokumente
+      </button>
+	  
+	  <button
+        class="tab-button"
+        type="button"
+        data-tab-target="VollmachtPanel"
+      >
+        Vollmachten
+      </button>
+
+      <button
+        class="tab-button"
+        type="button"
+        data-tab-target="contractPanel"
+      >
+        Vertragsübersicht
+      </button>
+    </div>
+
+    <!-- Tab 1: Kundenteam -->
+    <section id="customerTeamPanel" class="tab-panel active">
+      <h2 class="section-title">Kundenteam</h2>
+
+      <div class="search-row">
+        <label for="customerNameSearch">Name suchen:</label>
+        <input
+          id="customerNameSearch"
+          type="search"
+          placeholder="z.B. Max Muster"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="table-container">
+        <table id="customerTeamTable" class="data-table"></table>
+      </div>
+    </section>
+	
+	 <!-- Tab 2: Offene UK_Service -->
+    <section id="UKServicePanel" class="tab-panel active">
+      <h2 class="section-title">Offene UK-Service</h2>
+
+      <div class="search-row">
+        <label for="UKserviceSearch">Suche nach Status:</label>
+        <input
+          id="UKserviceSearch"
+          type="search"
+          placeholder=""
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="table-container">
+        <table id="UKserviceTable" class="data-table"></table>
+      </div>
+    </section>
+	
+	 <!-- Tab 3: Dokumente -->
+    <section id="DokumentePanel" class="tab-panel active">
+      <h2 class="section-title">Dokumente</h2>
+
+      <div class="search-row">
+        <label for="DokumenteSearch">Suche nach Status:</label>
+        <input
+          id="DokumenteSearch"
+          type="search"
+          placeholder=""
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="table-container">
+        <table id="DokumenteTable" class="data-table"></table>
+      </div>
+    </section>
+	
+	 <!-- Tab 4: Vollmacht -->
+    <section id="VollmachtPanel" class="tab-panel active">
+      <h2 class="section-title">Vollmachten</h2>
+
+      <div class="search-row">
+        <label for="VollmachtSearch">Name:</label>
+        <input
+          id="VollmachtSearch"
+          type="search"
+          placeholder=""
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="table-container">
+        <table id="VollmachtTable" class="data-table"></table>
+      </div>
+    </section>
+	
+
+    <!-- Tab 5: Vertragsübersicht -->
+    <section id="contractPanel" class="tab-panel">
+      <h2 class="section-title">Vertragsübersicht</h2>
+       <div class="table-container">
+        <table id="contractTable" class="data-table"></table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    class SortableApiTable {
+      constructor(options) {
+        this.tableElement = document.querySelector(options.tableSelector);
+
+        this.apiUrl = options.apiUrl || null;
+        this.staticData = Array.isArray(options.staticData)
+          ? options.staticData
+          : null;
+
+        this.columns = options.columns;
+
+        this.allData = [];
+        this.data = [];
+
+        this.sortColumn = null;
+        this.sortDirection = "asc";
+
+        this.filterTerm = "";
+        this.filterKeys = options.filterKeys || [];
+
+        this.initialized = false;
+      }
+
+      async init() {
+        if (this.initialized) {
+          return;
+        }
+
+        this.initialized = true;
+
+        try {
+          if (this.staticData) {
+            this.allData = this.staticData.map(item => ({ ...item }));
+            this.applyFilterAndSort();
+            this.render();
+            return;
+          }
+
+          if (!this.apiUrl) {
+            throw new Error("No API URL or static data configured.");
+          }
+
+          this.renderMessage("Daten werden geladen...", "loading");
+
+          const response = await fetch(this.apiUrl, {
+            method: "GET",
+            headers: {
+              "Accept": "application/json"
+
+              /*
+                Add authorization here when your backend needs it:
+
+                "Authorization": "Bearer YOUR_TOKEN"
+              */
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Backend error: ${response.status} ${response.statusText}`);
+          }
+
+          const result = await response.json();
+
+          /*
+            Supported backend response format 1:
+
+            [
+              {
+                "contract": "123456",
+                "product": "Tagesgeld/Giro"
+              }
+            ]
+
+            Supported backend response format 2:
+
+            {
+              "data": [
+                {
+                  "contract": "123456",
+                  "product": "Tagesgeld/Giro"
+                }
+              ]
+            }
+          */
+
+          this.allData = Array.isArray(result) ? result : result.data || [];
+
+          this.applyFilterAndSort();
+          this.render();
+        } catch (error) {
+          this.initialized = false;
+          this.renderMessage(
+            "Fehler beim Laden der Daten: " + error.message,
+            "error"
+          );
+        }
+      }
+
+      setSearchTerm(searchTerm) {
+        this.filterTerm = String(searchTerm || "")
+          .trim()
+          .toLocaleLowerCase("de-DE");
+
+        if (!this.initialized) {
+          return;
+        }
+
+        this.applyFilterAndSort();
+        this.render();
+      }
+
+      applyFilterAndSort() {
+        let filteredData = [...this.allData];
+
+        if (this.filterTerm && this.filterKeys.length > 0) {
+          filteredData = filteredData.filter(item => {
+            return this.filterKeys.some(key => {
+              const value = this.getValue(item, key);
+
+              return String(value ?? "")
+                .toLocaleLowerCase("de-DE")
+                .includes(this.filterTerm);
+            });
+          });
+        }
+
+        if (this.sortColumn) {
+          const column = this.columns.find(col => col.key === this.sortColumn);
+
+          if (column) {
+            const directionMultiplier = this.sortDirection === "asc" ? 1 : -1;
+
+            filteredData.sort((a, b) => {
+              const valueA = this.getValue(a, column.key);
+              const valueB = this.getValue(b, column.key);
+
+              return this.compareValues(valueA, valueB, column.type) * directionMultiplier;
+            });
+          }
+        }
+
+        this.data = filteredData;
+      }
+
+      render() {
+        this.tableElement.innerHTML = "";
+
+        this.renderHeader();
+        this.renderBody();
+      }
+
+      renderHeader() {
+        const thead = document.createElement("thead");
+        const row = document.createElement("tr");
+
+        this.columns.forEach(column => {
+          const th = document.createElement("th");
+
+          const label = document.createElement("span");
+          label.textContent = column.label;
+
+          const icon = document.createElement("span");
+          icon.className = "sort-icon";
+
+          if (this.sortColumn === column.key) {
+            icon.textContent = this.sortDirection === "asc" ? "▲" : "▼";
+          } else {
+            icon.textContent = "↕";
+          }
+
+          th.appendChild(label);
+          th.appendChild(icon);
+
+          th.addEventListener("click", () => {
+            this.sortByColumn(column);
+          });
+
+          row.appendChild(th);
+        });
+
+        thead.appendChild(row);
+        this.tableElement.appendChild(thead);
+      }
+
+      renderBody() {
+        const tbody = document.createElement("tbody");
+
+        if (!this.data.length) {
+          const row = document.createElement("tr");
+          const cell = document.createElement("td");
+
+          cell.className = "empty";
+          cell.colSpan = this.columns.length;
+
+          if (this.filterTerm) {
+            cell.textContent = "Keine Treffer für die Suche gefunden.";
+          } else {
+            cell.textContent = "Keine Daten vorhanden.";
+          }
+
+          row.appendChild(cell);
+          tbody.appendChild(row);
+          this.tableElement.appendChild(tbody);
+          return;
+        }
+
+        this.data.forEach(item => {
+          const row = document.createElement("tr");
+
+          this.columns.forEach(column => {
+            const td = document.createElement("td");
+            const rawValue = this.getValue(item, column.key);
+
+            if (column.formatter) {
+              td.textContent = column.formatter(rawValue, item);
+            } else {
+              td.textContent = rawValue ?? "";
+            }
+
+            row.appendChild(td);
+          });
+
+          tbody.appendChild(row);
+        });
+
+        this.tableElement.appendChild(tbody);
+      }
+
+      sortByColumn(column) {
+        if (this.sortColumn === column.key) {
+          this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
+        } else {
+          this.sortColumn = column.key;
+          this.sortDirection = "asc";
+        }
+
+        this.applyFilterAndSort();
+        this.render();
+      }
+
+      compareValues(valueA, valueB, type = "string") {
+        if (valueA === null || valueA === undefined) return 1;
+        if (valueB === null || valueB === undefined) return -1;
+
+        switch (type) {
+          case "number":
+            return Number(valueA) - Number(valueB);
+
+          case "date":
+            return new Date(valueA) - new Date(valueB);
+
+          case "currency":
+            return this.parseNumber(valueA) - this.parseNumber(valueB);
+
+          case "string":
+          default:
+            return String(valueA).localeCompare(String(valueB), "de", {
+              numeric: true,
+              sensitivity: "base"
+            });
+        }
+      }
+
+      parseNumber(value) {
+        if (typeof value === "number") {
+          return value;
+        }
+
+        return Number(
+          String(value)
+            .replace(/\./g, "")
+            .replace(",", ".")
+            .replace(/[^\d.-]/g, "")
+        );
+      }
+
+      getValue(object, path) {
+        return path.split(".").reduce((current, key) => {
+          return current ? current[key] : undefined;
+        }, object);
+      }
+
+      renderMessage(message, className) {
+        this.tableElement.innerHTML = "";
+
+        const tbody = document.createElement("tbody");
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.className = className;
+        cell.colSpan = this.columns.length;
+        cell.textContent = message;
+
+        row.appendChild(cell);
+        tbody.appendChild(row);
+        this.tableElement.appendChild(tbody);
+      }
+    }
+
+    function formatGermanCurrency(value) {
+      if (value === null || value === undefined || value === "") {
+        return "";
+      }
+
+      return new Intl.NumberFormat("de-DE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(Number(value));
+    }
+
+    function formatGermanDate(value) {
+      if (!value) {
+        return "";
+      }
+
+      return new Intl.DateTimeFormat("de-DE").format(new Date(value));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      /*
+        Hardcoded data for the first table: Kundenteam.
+        This table no longer calls an API.
+      */
+      const hardcodedCustomerTeamData = [
+        {
+          role: "Kundenmanager",
+          name: "Max Muster"
+        },
+        {
+          role: "Vertriebsmanager",
+          name: "Maxi Muster"
+        },
+        {
+          role: "Kundenberater",
+          name: "Musti Maxer"
+        },
+        {
+          role: "Zahlungsverkehrslösungen",
+          name: "Olaf Schmidt"
+        }
+      ];
+	  
+	  const hardcodedUKServiceData = [
+        {
+          Vorgang: "17.10.25",
+          Status: "Freistellungsbescheid"
+        },
+        {
+          Vorgang: "03.03.25",
+          Status: "Einzahlerkarte Konto 2047009"
+        },
+        {
+          Vorgang: "03.03.26",
+          Status: "Löschung DA 343,75€ Konto 25358"
+        }
+        
+      ];
+
+
+	  const hardcodedDokuData = [
+        {
+          Dokument: "KYC Prüfung CORA-X, HR-Auszug aktuell",
+          Datum: "17.10.26",
+		  Typ: "Handelsregisterauszug"
+        }
+      ];
+	  
+	  const hardcodedVollmachData = [
+        {
+          Bevollmächtigter: "Olaf Müller",
+          Nummer: "64762134"
+		  Art: "Verfügungsberechtigter für Mietfach 46578741",
+		  Gültig bis: ""
+        },
+        {
+          Bevollmächtigter: "Markus Maier",
+          Nummer: "44231774"
+		  Art: "Kontobezogene Vollmacht (A) für Konto DE146764434341014131",
+		  Gültig bis: ""
+        },
+        {
+          Bevollmächtigter: "Sandra Schmidt",
+          Nummer: "88146210"
+		  Art: "Kontobezogene Vollmacht (A) für Konto DE146764434341014131",
+		  Gültig bis: ""
+        },
+        {
+          Bevollmächtigter: "Sydney Swenney",
+          Nummer: "78945231"
+		  Art: "Kontobezogene Vollmacht (A) für Konto DE146764434341014131",
+		  Gültig bis: """
+        }
+      ];
+
+      const customerTeamTable = new SortableApiTable({
+        tableSelector: "#customerTeamTable",
+
+        // Hardcoded values instead of backend API
+        staticData: hardcodedCustomerTeamData,
+
+        // Search only in the name field
+        filterKeys: ["name"],
+
+        columns: [
+          {
+            key: "role",
+            label: "Rolle/Team",
+            type: "string"
+          },
+          {
+            key: "name",
+            label: "Name",
+            type: "string"
+          }
+        ]
+      });
+	  
+	  const UKServiceTable = new SortableApiTable({
+        tableSelector: "#UKserviceTable",
+
+        // Hardcoded values instead of backend API
+        staticData: hardcodedUKServiceData,
+
+        // Search only in the name field
+        filterKeys: ["Status"],
+
+        columns: [
+          {
+            key: "Vorgang",
+            label: "VORGANG",
+            type: "string"
+          },
+          {
+            key: "Status",
+            label: "STATE",
+            type: "string"
+          }
+        ]
+      });
+
+	  const DokumenteTable = new SortableApiTable({
+        tableSelector: "#DokumenteTable",
+
+        // Hardcoded values instead of backend API
+        staticData: hardcodedDokuData,
+
+        // Search only in the name field
+        filterKeys: ["Datum"],
+
+        columns: [
+          {
+            key: "Dokument",
+            label: "Dokument",
+            type: "string"
+          },
+          {
+            key: "Datum",
+            label: "Datum",
+            type: "string"
+          }
+        ]
+      });
+
+	  const VollmachtTable = new SortableApiTable({
+        tableSelector: "#VollmachtTable",
+
+        // Hardcoded values instead of backend API
+        staticData: hardcodedVollmachData,
+
+        // Search only in the name field
+        filterKeys: ["Bevollmächtigter"],
+
+        columns: [
+          {
+            key: "Bevollmächtigter",
+            label: "Bevollmächtigter",
+            type: "string"
+          },
+          {
+            key: "Nummer",
+            label: "Nummer",
+            type: "string"
+          },
+		  {
+            key: "Art",
+            label: "Art",
+            type: "string"
+          }
+        ]
+      });	  
+
+
+
+
+   const contractTable = new SortableApiTable({
+        tableSelector: "#contractTable",
+
+        // This table still loads data from the backend
+        apiUrl: "https://6724f040c39fedae05b35190.mockapi.io/api/AnnaG/contracts",
+
+        columns: [
+        {
+          key: "Vertrag",
+          label: "Vertrag",
+          type: "string"
+        },
+		{
+          key: "name",
+          label: "Name",
+          type: "string"
+        },
+        {
+          key: "Produkt",
+          label: "Produkt",
+          type: "string"
+        },
+        {
+          key: "Status",
+          label: "Status",
+          type: "string"
+        },
+        {
+          key: "IBAN",
+          label: "Konto/IBAN",
+          type: "string"
+        },
+        {
+          key: "Saldo",
+          label: "Saldo",
+          type: "currency",
+          formatter: formatGermanCurrency
+        },
+        {
+          key: "VerfuegbarerBetrag",
+          label: "Verfügbarer Betrag",
+          type: "currency",
+          formatter: formatGermanCurrency
+        }
+      ]
+      });
+
+      const tablesByPanel = {
+        customerTeamPanel: customerTeamTable,
+		UKServicePanel: UKServiceTable,
+		DokumentePanel: DokumenteTable,
+		VollmachtPanel: VollmachtTable,
+        contractPanel: contractTable
+      };
+
+      function activateTab(panelId) {
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabPanels = document.querySelectorAll(".tab-panel");
+
+        tabButtons.forEach(button => {
+          const isActive = button.dataset.tabTarget === panelId;
+          button.classList.toggle("active", isActive);
+        });
+
+        tabPanels.forEach(panel => {
+          const isActive = panel.id === panelId;
+          panel.classList.toggle("active", isActive);
+        });
+
+        tablesByPanel[panelId].init();
+      }
+
+      document.querySelectorAll(".tab-button").forEach(button => {
+        button.addEventListener("click", () => {
+          activateTab(button.dataset.tabTarget);
+        });
+      });
+
+      const customerNameSearchInput = document.querySelector("#customerNameSearch");
+
+      customerNameSearchInput.addEventListener("input", event => {
+        customerTeamTable.setSearchTerm(event.target.value);
+      });
+	  
+	  const UKserviceSearchInput = document.querySelector("#UKserviceSearch");
+
+      UKserviceSearchInput.addEventListener("input", event => {
+        UKserviceTable.setSearchTerm(event.target.value);
+      });
+	  
+	  const DokumenteSearchInput = document.querySelector("#DokumenteSearch");
+
+      DokumenteSearchInput.addEventListener("input", event => {
+        DokumenteTable.setSearchTerm(event.target.value);
+      });
+	  
+	  const VollmachtSearchInput = document.querySelector("#VollmachtSearch");
+
+      VollmachtSearchInput.addEventListener("input", event => {
+        VollmachtTable.setSearchTerm(event.target.value);
+      });
+
+      // Load first tab on page load
+      activateTab("contractPanel");
+    });
+  </script>
+</body>
+</html>
